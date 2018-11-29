@@ -12,9 +12,11 @@ class Swatch {
   }
 
   clickAction() {
-    this.swatch.addEventListener("click", () => console.log(this.swatch.id));
+    let colorMixer = document.getElementById("color-mixer");
+    this.swatch.addEventListener("click", () => {
+      colorMixer.style.backgroundColor = this.swatch.style.backgroundColor;
+    });
   }
-
 }
 
 export default Swatch;

@@ -22,6 +22,7 @@ const makeOtherColor = (target, range) => {
     return (value + delta) % 255;
   });
 };
+
 const getOtherColors = (target, range) => {
   let colors = [];
   for (let i = 0; i < 4; i++) {
