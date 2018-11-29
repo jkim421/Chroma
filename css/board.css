@@ -1,0 +1,93 @@
+#game-container {
+  height: 800px;
+  width: 500px;
+  margin: 0 auto;
+  position: relative;
+  background: linear-gradient(to bottom right, #000, #fff);
+  background-size: 625% 1000%;
+  animation: 10s ease infinite alternate bganim;
+}
+
+@keyframes bganim {
+  0%{background-position:50% 0%}
+  100%{background-position:50% 100%}
+}
+
+#game-canvas {
+  position: absolute;
+  height: 800px;
+  width: 500px;
+  border: 1px solid black;
+  margin: 0 auto;
+  z-index: 2;
+}
+
+#target-color {
+  position: absolute;
+  top: 50px;
+  left: 150px;
+  height: 200px;
+  width: 200px;
+  background: salmon;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+#color-selectors {
+  height: 400px;
+  width: 400px;
+  position: absolute;
+  top: 350px;
+  left: 50px;
+}
+
+#color-blender {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  border: 1px solid black;
+  background: none;
+  position: absolute;
+  top: 100px;
+  left: 100px;
+}
+
+.color-swatches {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 1px solid black;
+  background: salmon;
+  position: absolute;
+
+}
+
+#swatch1 {
+  top: 25px;
+  left: 175px;
+}
+
+#swatch2 {
+  top: 100px;
+  left: 305px;
+}
+
+#swatch3 {
+  top: 250px;
+  left: 305px;
+}
+
+#swatch4 {
+  top: 325px;
+  left: 175px;
+}
+
+#swatch5 {
+  top: 250px;
+  left: 45px;
+}
+
+#swatch6 {
+  top: 100px;
+  left: 45px;
+}
