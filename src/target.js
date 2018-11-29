@@ -1,9 +1,19 @@
-let targetR = Math.round(Math.random()*255);
-let targetG = Math.round(Math.random()*255);
-let targetB = Math.round(Math.random()*255);
+import { randomNum } from './colors.js';
 
-const targetColor = `rgb(${targetR},${targetG},${targetB})`;
+class Target {
+  constructor() {
+    this.target = document.getElementById("target-color");
+    this.setColor();
+  }
 
-export const setTarget = () => {
-  document.getElementById("target-color").style.backgroundColor = targetColor;
-};
+  setColor() {
+    let targetR = randomNum(255);
+    let targetG = randomNum(255);
+    let targetB = randomNum(255);
+    const targetColor = `rgb(${targetR},${targetG},${targetB})`;
+    this.target.style.backgroundColor = targetColor;
+    return [targetR, targetG, targetB];
+  }
+}
+
+export default Target;

@@ -19,7 +19,7 @@
   width: 500px;
   border: 1px solid black;
   margin: 0 auto;
-  z-index: 2;
+  /* z-index: 2; */
 }
 
 #target-color {
@@ -59,7 +59,10 @@
   border: 1px solid black;
   background: salmon;
   position: absolute;
+}
 
+.color-swatches:hover {
+  cursor: pointer;
 }
 
 #swatch1 {
