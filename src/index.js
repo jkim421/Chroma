@@ -1,6 +1,7 @@
 import Target from './target.js';
 import Swatch from './swatch.js';
-import { randomNum, getSwatchColor } from './colors.js';
+import { getAllColors } from './colors.js';
+import { shuffle } from 'lodash';
 
 document.addEventListener("DOMContentLoaded", () => {
   const canvas = document.getElementById("game-canvas");
@@ -14,14 +15,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const colorRange = 300;
 
-  let swatchCollection = Array.from(document.getElementsByClassName("color-swatches"));
+  let swatchEles = Array.from(
+    document.getElementsByClassName("color-swatches"));
 
-  let colorSwatches = swatchCollection.map( swatch => {
-    let swatchColor = getSwatchColor(targetColor, colorRange);
-    let newSwatch = new Swatch(swatch.id);
-    debugger
-    newSwatch.setColor(swatchColor);
-  });
+  let allColors = getAllColors(targetColor, colorRange);
+  allColors = _.shuffle(allColors);
 
+  let colorSwatches = [];
 
+  for (let i=0; i < swatchEles.length; i++) {
+    let newSwatch = new Swatch(swatchEles[i].id);
+    newSwatch.setColor(allColors[i]);
+    if (allColors[i][3]) {
+      newSwatch.solution = true;
+    }
+    colorSwatches.push(newSwatch);
+  }
+
+  console.log(targetColor);
+  console.log(colorSwatches);
 });

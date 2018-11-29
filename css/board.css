@@ -1,4 +1,15 @@
 #game-container {
+  display: flex;
+  align-items: center;
+}
+
+#palette {
+  display: block;
+  height: 300px;
+  width: 300px;
+}
+
+#game-board {
   height: 800px;
   width: 500px;
   margin: 0 auto;
@@ -57,7 +68,7 @@
   width: 50px;
   border-radius: 50%;
   border: 1px solid black;
-  background: salmon;
+  background: #fff;
   position: absolute;
 }
 

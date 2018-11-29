@@ -6,6 +6,7 @@
     "webpack": "webpack --mode=development --watch"
   },
   "dependencies": {
+    "lodash": "^4.17.11",
     "webpack": "^4.6.0"
   },
   "devDependencies": {
