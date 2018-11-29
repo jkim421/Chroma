@@ -1,0 +1,14 @@
+{
+  "name": "chroma",
+  "private": true,
+  "scripts": {
+    "postinstall": "webpack --mode=development",
+    "webpack": "webpack --mode=development --watch"
+  },
+  "dependencies": {
+    "webpack": "^4.6.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^2.1.2"
+  }
+}
