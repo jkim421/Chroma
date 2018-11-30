@@ -34,7 +34,7 @@
 }
 
 .colorable {
-  transition: background-color 3s;
+  transition: background-color 1s;
 }
 
 #target-color {

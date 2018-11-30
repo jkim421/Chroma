@@ -1,38 +1,33 @@
 export const randomNum = num => Math.round(Math.random() * num);
 
-const getSolutionColors = (target, range) => {
-  let dRed, dBlue, dGreen, colorOne, colorTwo;
-  let remainder = range;
-
-  dRed = randomNum(target[0]);
-  dBlue = randomNum(target[1]);
-  dGreen = randomNum(target[2]);
-
-  colorOne = [dRed, dBlue, dGreen, true];
-  colorTwo = [target[0]-dRed, target[1]-dBlue, target[2]-dGreen, true];
-
-  return [colorOne, colorTwo];
+const makeColor = () => {
+  let rgb = [];
+  for (let i = 0; i < 3; i++) {
+    rgb.push(randomNum(255));
+  }
+  return rgb;
 };
 
-const makeOtherColor = (target, range) => {
-  let remainder = range;
-  return target.map( value => {
-    let delta = randomNum(remainder);
-    remainder -= delta;
-    return (value + delta) % 255;
-  });
-};
-
-const getOtherColors = (target, range) => {
+export const getEasyColors = () => {
   let colors = [];
-  for (let i = 0; i < 4; i++) {
-    colors.push( makeOtherColor(target, range));
+  for (let i = 0; i < 6; i++) {
+    let swatch = makeColor();
+    if (i < 2) {
+      swatch.push(true);
+    }
+    colors.push(swatch);
   }
   return colors;
 };
 
-export const getAllColors = (target, range) => {
-  const solution = getSolutionColors(target, range);
-  const other = getOtherColors(target, range);
-  return solution.concat(other);
+export const getHardColors = () => {
+  let colors = [];
+  for (let i = 0; i < 6; i++) {
+    let swatch = makeColor();
+    if (i < 3) {
+      swatch.push(true);
+    }
+    colors.push(swatch);
+  }
+  return colors;
 };

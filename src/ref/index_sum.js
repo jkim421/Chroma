@@ -1,6 +1,6 @@
 import Target from './target.js';
 import Swatch from './swatch.js';
-import { getEasyColors, getHardColors } from './colors.js';
+import { getAllColors } from './colors.js';
 import { shuffle } from 'lodash';
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -9,18 +9,16 @@ document.addEventListener("DOMContentLoaded", () => {
   canvas.height = 800;
   canvas.width = 500;
 
-  const colorRange = 300;
 
   let target = new Target;
+  let targetColor = target.setColor();
+
+  const colorRange = 300;
+
   let swatchEles = Array.from(
     document.getElementsByClassName("color-swatches"));
 
-  // let allColors = getEasyColors();
-  let allColors = getHardColors();
-
-  // let targetColor = target.setEasyColor(allColors[0], allColors[1]);
-  let targetColor = target.setHardColor(allColors[0], allColors[1], allColors[2]);
-
+  let allColors = getAllColors(targetColor, colorRange);
   allColors = _.shuffle(allColors);
 
   let colorSwatches = [];

@@ -1,0 +1,23 @@
+setColor(rgbOne, rgbTwo) {
+  let diffR = rgbOne[0]>rgbTwo[0] ?
+    rgbOne[0]-rgbTwo[0] : rgbTwo[0]-rgbOne[0];
+  let diffG = rgbOne[1]>rgbTwo[1] ?
+    rgbOne[1]-rgbTwo[1] : rgbTwo[1]-rgbOne[1];
+  let diffB = rgbOne[2]>rgbTwo[2] ?
+    rgbOne[2]-rgbTwo[2] : rgbTwo[2]-rgbOne[2];
+
+  let deltaR = Math.round(Math.random() * diffR)
+  let deltaG = Math.round(Math.random() * diffG)
+  let deltaB = Math.round(Math.random() * diffB)
+
+  let targetR = rgbOne[0]>rgbTwo[0] ?
+    rgbTwo[0] + deltaR : rgbOne[0] + deltaR;
+  let targetG = rgbOne[1]>rgbTwo[1] ?
+    rgbTwo[1] + deltaG : rgbOne[1] + deltaG;
+  let targetB = rgbOne[2]>rgbTwo[2] ?
+    rgbTwo[2] + deltaB : rgbOne[2] + deltaB;
+
+  const targetColor = `rgb(${targetR},${targetG},${targetB})`;
+  this.target.style.backgroundColor = targetColor;
+  return [targetR, targetG, targetB];
+}
