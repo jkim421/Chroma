@@ -1,4 +1,4 @@
-export const randomNum = num => Math.round(Math.random() * num);
+const randomNum = num => Math.round(Math.random() * num);
 
 const makeColor = () => {
   let rgb = [];

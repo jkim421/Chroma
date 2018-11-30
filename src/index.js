@@ -9,19 +9,17 @@ document.addEventListener("DOMContentLoaded", () => {
   canvas.height = 800;
   canvas.width = 500;
 
-  const colorRange = 300;
-
   let target = new Target;
   let swatchEles = Array.from(
     document.getElementsByClassName("color-swatches"));
 
-  // let allColors = getEasyColors();
-  let allColors = getHardColors();
+  let allColors = getEasyColors();
+  // let allColors = getHardColors();
 
-  // let targetColor = target.setEasyColor(allColors[0], allColors[1]);
-  let targetColor = target.setHardColor(allColors[0], allColors[1], allColors[2]);
+  let targetColor = target.setEasyColor(allColors[0], allColors[1]);
+  // let targetColor = target.setHardColor(allColors[0], allColors[1], allColors[2]);
 
-  allColors = _.shuffle(allColors);
+  // allColors = _.shuffle(allColors);
 
   let colorSwatches = [];
 
