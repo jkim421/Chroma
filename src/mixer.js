@@ -1,6 +1,6 @@
 class Mixer {
   constructor() {
-    this.swatch = document.getElementById("color-mixer");
+    this.ele = document.getElementById("color-mixer");
   }
 
   setColor() {

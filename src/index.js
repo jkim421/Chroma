@@ -1,37 +1,30 @@
 import Target from './target.js';
 import Swatch from './swatch.js';
-import { getEasyColors, getHardColors } from './colors.js';
+import Game from './game.js';
 import { shuffle } from 'lodash';
+import { startGame } from './game.js';
+import { setMute } from './music.js';
 
 document.addEventListener("DOMContentLoaded", () => {
-  const canvas = document.getElementById("game-canvas");
-  const ctx = canvas.getContext("2d");
-  canvas.height = 800;
-  canvas.width = 500;
+  const title = document.getElementById("title");
+  const startBtn = document.getElementById("start-btn");
+  const mixer = document.getElementById("color-mixer");
 
+  const mute = document.getElementById("mute-btn");
+  const player = document.getElementById("music-player");
+
+  const restart = document.getElementById("restart-btn");
+
+  setMute(mute, player);
+
+  let game = new Game;
   let target = new Target;
   let swatchEles = Array.from(
     document.getElementsByClassName("color-swatches"));
 
-  let allColors = getEasyColors();
-  // let allColors = getHardColors();
+  game.startGame(title, startBtn, target, swatchEles, mixer, game.startRender);
 
-  let targetColor = target.setEasyColor(allColors[0], allColors[1]);
-  // let targetColor = target.setHardColor(allColors[0], allColors[1], allColors[2]);
-
-  // allColors = _.shuffle(allColors);
-
-  let colorSwatches = [];
-
-  for (let i=0; i < swatchEles.length; i++) {
-    let newSwatch = new Swatch(swatchEles[i].id);
-    newSwatch.setColor(allColors[i]);
-    if (allColors[i][3]) {
-      newSwatch.solution = true;
-    }
-    colorSwatches.push(newSwatch);
-  }
-
-  console.log(targetColor);
-  console.log(colorSwatches);
+  restart.addEventListener("click", () => {
+    game.restartGame(target, swatchEles, mixer);
+  });
 });

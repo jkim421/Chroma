@@ -4,13 +4,39 @@
     <meta charset="utf-8">
     <title>Chroma</title>
     <link rel="stylesheet" href="../css/board.css">
+    <link rel="stylesheet" href="../css/menu_text.css">
+    <link href="https://fonts.googleapis.com/css?family=Bungee|Bungee+Hairline|Bungee+Outline|Bungee+Shade" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Megrim" rel="stylesheet">
+
     <script type="application/javascript" src="../bundle/bundle.js"></script>
   </head>
   <body>
+    <button id="mute-btn" class="game-button">Mute</button>
+    <button id="restart-btn" class="game-button">Restart</button>
+    
+    <audio id="music-player" loop>
+      <source src="https://s3.amazonaws.com/chroma-prod/chris_zabriskie_a_new_day_in_a_new_sector.mp3" type="audio/mp3">
+    </audio>
     <div id="game-container">
       <div id="game-board">
-        <canvas id="game-canvas">
-        </canvas>
+        <h1
+          id="title"
+          class="menu-text"
+          style="font-size: 50px; top: 280px; left: 115px">
+          <span id="title1" class="menu-text">C</span>
+          <span id="title2" class="menu-text">H</span>
+          <span id="title3" class="menu-text">R</span>
+          <span id="title4" class="menu-text">O</span>
+          <span id="title5" class="menu-text">M</span>
+          <span id="title6" class="menu-text">A</span>
+        </h1>
+        <p id="start-btn" class="menu-text">
+          <span id="start1" class="menu-text">S</span>
+          <span id="start2" class="menu-text">T</span>
+          <span id="start3" class="menu-text">A</span>
+          <span id="start4" class="menu-text">R</span>
+          <span id="start5" class="menu-text">T</span>
+        </p>
         <div id="target-color" class="colorable"></div>
         <div id="color-selectors">
           <div id="color-mixer" class="colorable"></div>

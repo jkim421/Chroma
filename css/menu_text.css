@@ -1,0 +1,186 @@
+.menu-text {
+  font-family: 'Bungee', cursive;
+  /* font-family: 'Bungee Hairline', cursive; */
+  transition: visibility 1s, opacity 2s;
+  text-shadow:
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+}
+
+#title {
+  position: absolute;
+  margin: 0;
+  transition: font-size ease-in-out 2.8s, top ease-in-out 2.8s, left ease-in-out 2.8s;
+}
+
+#start-btn {
+  font-size: 30px;
+  margin-top: 370px;
+  position: relative;
+  display: inline-block;
+}
+
+#start-btn:hover {
+  cursor: pointer;
+}
+
+.hidden-text {
+  visibility: hidden;
+  opacity: 0;
+}
+
+#title1 {
+  animation: 15s infinite alternate-reverse linear title1;
+}
+
+#title2 {
+  animation: 15s infinite alternate-reverse linear title2;
+}
+
+#title3 {
+  animation: 15s infinite alternate-reverse linear title3;
+}
+
+#title4 {
+  animation: 15s infinite alternate-reverse linear title4;
+}
+
+#title5 {
+  animation: 15s infinite alternate-reverse linear title5;
+}
+
+#title6 {
+  animation: 15s infinite alternate-reverse linear title6;
+}
+
+@keyframes title1 {
+  0%{color: red}
+  16%{color: orange}
+  33%{color: yellow}
+  50%{color: green}
+  66%{color: blue}
+  83%{color: indigo}
+  100%{color: violet}
+}
+
+@keyframes title2 {
+  0%{color: orange}
+  16%{color: yellow}
+  33%{color: green}
+  50%{color: blue}
+  66%{color: indigo}
+  83%{color: violet}
+  100%{color: red}
+}
+
+@keyframes title3 {
+  0%{color: yellow}
+  16%{color: green}
+  33%{color: blue}
+  50%{color: indigo}
+  66%{color: violet}
+  83%{color: red}
+  100%{color: orange}
+}
+
+@keyframes title4 {
+  0%{color: green}
+  16%{color: blue}
+  33%{color: indigo}
+  50%{color: violet}
+  66%{color: red}
+  83%{color: orange}
+  100%{color: yellow}
+}
+
+@keyframes title5 {
+  0%{color: blue}
+  16%{color: indigo}
+  33%{color: violet}
+  50%{color: red}
+  66%{color: orange}
+  83%{color: yellow}
+  100%{color: green}
+}
+
+@keyframes title6 {
+  0%{color: indigo}
+  16%{color: violet}
+  33%{color: red}
+  50%{color: orange}
+  66%{color: yellow}
+  83%{color: green}
+  100%{color: blue}
+}
+
+#start1 {
+  animation: 15s infinite alternate-reverse linear start1;
+}
+
+#start2 {
+  animation: 15s infinite alternate-reverse linear start2;
+}
+
+#start3 {
+  animation: 15s infinite alternate-reverse linear start3;
+}
+
+#start4 {
+  animation: 15s infinite alternate-reverse linear start4;
+}
+
+#start5 {
+  animation: 15s infinite alternate-reverse linear start5;
+}
+
+@keyframes start1 {
+  0%{color: violet}
+  16%{color: red}
+  33%{color: orange}
+  50%{color: yellow}
+  66%{color: green}
+  83%{color: blue}
+  100%{color: indigo}
+}
+
+@keyframes start2 {
+  0%{color: red}
+  16%{color: orange}
+  33%{color: yellow}
+  50%{color: green}
+  66%{color: blue}
+  83%{color: indigo}
+  100%{color: violet}
+}
+
+@keyframes start3 {
+  0%{color: orange}
+  16%{color: yellow}
+  33%{color: green}
+  50%{color: blue}
+  66%{color: indigo}
+  83%{color: violet}
+  100%{color: red}
+}
+
+@keyframes start4 {
+  0%{color: yellow}
+  16%{color: green}
+  33%{color: blue}
+  50%{color: indigo}
+  66%{color: violet}
+  83%{color: red}
+  100%{color: orange}
+}
+
+@keyframes start5 {
+  0%{color: green}
+  16%{color: blue}
+  33%{color: indigo}
+  50%{color: violet}
+  66%{color: red}
+  83%{color: orange}
+  100%{color: yellow}
+}
