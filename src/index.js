@@ -8,37 +8,27 @@ import { setMute } from './music.js';
 document.addEventListener("DOMContentLoaded", () => {
   const title = document.getElementById("title");
   const startBtn = document.getElementById("start-btn");
-  const mixer = document.getElementById("color-mixer");
 
-  const mute = document.getElementById("mute-btn");
   const player = document.getElementById("music-player");
+  const mute = document.getElementById("mute-btn");
 
   const restart = document.getElementById("restart-btn");
   const submit = document.getElementById("submit-btn");
-  const score = document.getElementById("score-display");
-  const strikes = document.getElementById("strikes");
 
   setMute(mute, player);
 
-  let game = new Game;
   let target = new Target;
   let swatchEles = Array.from(
     document.getElementsByClassName("color-swatches"));
+  let game = new Game(target, swatchEles);
 
   game.startGame(
     title,
     startBtn,
-    target,
-    swatchEles,
-    mixer,
-    game.startRender,
-    restart,
-    submit,
-    score,
-    strikes);
+    game.startRender);
 
   restart.addEventListener("click", () => {
-    game.restartGame(target, swatchEles, mixer, restart, submit);
+    game.restartGame();
   });
 
   submit.addEventListener("click", () => {

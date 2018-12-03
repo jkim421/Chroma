@@ -8,30 +8,48 @@ import {
   showText,
   toggleText,
   moveTitle,
+  moveScore,
+  resetScore,
+  resetStrikes,
   showMatch } from './layout.js';
 import { shuffle, sample } from 'lodash';
 
 class Game {
-  constructor() {
+  constructor(target, swatchEles) {
+    this.target = target;
+    this.swatchEles = swatchEles;
+
     this.submission = [];
     this.swatches = [];
     this.startRender = this.startRender.bind(this);
-    this.strikes = 0;
+    this.strikeCount = 0;
     this.guessing = false;
+
+    this.mixer = document.getElementById("color-mixer");
+
+    this.restart = document.getElementById("restart-btn");
+    this.submit = document.getElementById("submit-btn");
+
+    this.score = document.getElementById("score-display");
+    this.scoreCount = document.getElementById("score-count");
+    this.strikes = document.getElementById("strikes");
+
+    this.rightIcon = document.getElementById("right-icon");
+    this.wrongIcon = document.getElementById("wrong-icon");
   }
 
-  startRender(title, startBtn, target, swatches, mixer, restart, submit, score, strikes) {
+  startRender(title, startBtn) {
     this.guessing = true;
     moveTitle(title);
     hideText(startBtn);
     setTimeout(() => {
-      this.renderBoard(target, swatches, mixer, restart, submit, score, strikes);}, 2000);
+      this.renderBoard(this.target, this.swatchEles);}, 1500);
   }
 
-  startGame(title, startBtn, target, swatches, mixer, startRender, restart, submit, score, strikes) {
+  startGame(title, startBtn, startRender) {
     startBtn.addEventListener("click", function handler(e) {
       e.currentTarget.removeEventListener("click", handler);
-      startRender(title, startBtn, target, swatches, mixer, restart, submit, score, strikes);
+      startRender(title, startBtn, this.target, this.swatches);
     });
   }
 
@@ -62,79 +80,103 @@ class Game {
     });
   }
 
-  processAnswer(restart, submit) {
+  processAnswer() {
     if (this.guessing === true && this.submission.length === 2) {
       this.guessing = false;
-      toggleText(restart);
-      toggleText(submit);
+      toggleText(this.restart);
+      toggleText(this.submit);
       if (this.submission.length === 2) {
         this.swatches.forEach( swatch => {
           showMatch(swatch);
         });
         if (this.submission.some( swatch => swatch.solution === false )) {
+          this.wrongIcon.classList.remove("hidden-text");
           this.updateStrikes();
         } else {
           this.updateScore();
+          this.rightIcon.classList.remove("hidden-text");
         }
       }
     }
   }
 
   updateStrikes() {
-    this.strikes += 1;
-    let currentStrike = document.getElementById(`strike${this.strikes}`);
+    this.strikeCount += 1;
+    let currentStrike = document.getElementById(`strike${this.strikeCount}`);
     currentStrike.classList.add("active-strike");
+    if (this.strikeCount === 3) {
+      this.endGame();
+    }
   }
 
   updateScore() {
-    let score = document.getElementById("score-count");
-    let newScore = parseInt(score.innerHTML) + 1;
-    score.innerHTML = `${newScore}`;
+    let newScore = parseInt(this.scoreCount.innerHTML) + 1;
+    this.scoreCount.innerHTML = `${newScore}`;
   }
 
-  restartGame(target, swatches, mixer, restart, submit) {
-    if (this.guessing === false) {
-      this.guessing = true;
-      toggleText(restart);
-      toggleText(submit);
+  endGame() {
+    moveScore(this.score, this.scoreCount);
 
-      this.resetSelection();
-      mixer.style.backgroundColor = "transparent";
+    this.wrongIcon.classList.add("hidden-text");
+    this.rightIcon.classList.add("hidden-text");
 
-      let newColors = getEasyColors();
-      let newTargetColor = target.setEasyColor(newColors[0], newColors[1]);
-      newColors = _.shuffle(newColors);
+    hideText(this.strikes);
+    this.restart.innerHTML = "new game";
+  }
 
-      for (let i=0; i < this.swatches.length; i++) {
-        this.swatches[i].setColor(newColors[i]);
-        if (newColors[i][3]) {
-          this.swatches[i].solution = true;
-        } else {
-          this.swatches[i].solution = false;
+  restartGame() {
+    if (this.strikeCount === 3) {
+      this.scoreCount.innerHTML = "0";
+      this.strikeCount = 0;
+      this.restart.innerHTML = "next round";
+      showText(this.strikes);
+      resetStrikes();
+      resetScore(this.score, this.scoreCount);
+      this.restartGame();
+    } else {
+      if (this.guessing === false) {
+        this.guessing = true;
+        toggleText(this.restart);
+        toggleText(this.submit);
+
+        this.resetSelection();
+        this.mixer.style.backgroundColor = "transparent";
+
+        this.wrongIcon.classList.add("hidden-text");
+        this.rightIcon.classList.add("hidden-text");
+
+        let newColors = getEasyColors();
+        let newTargetColor = this.target.setEasyColor(newColors[0], newColors[1]);
+        newColors = _.shuffle(newColors);
+
+        for (let i=0; i < this.swatches.length; i++) {
+          this.swatches[i].setColor(newColors[i]);
+          if (newColors[i][3]) {
+            this.swatches[i].solution = true;
+          } else {
+            this.swatches[i].solution = false;
+          }
         }
       }
     }
     console.log(this.swatches);
   }
 
-  renderBoard(target, swatches, mixer, restart, submit, score, strikes) {
+  renderBoard(target, swatches) {
     let allColors = getEasyColors();
     let targetColor = target.setEasyColor(allColors[0], allColors[1]);
 
     allColors = _.shuffle(allColors);
     setBorder(target.ele);
-    setBorder(mixer);
-    showText(submit);
-    showText(score);
-    showText(strikes);
+    setBorder(this.mixer);
+    showText(this.submit);
+    showText(this.score);
+    showText(this.strikes);
 
     for (let i=0; i < swatches.length; i++) {
       let newSwatch = new Swatch(swatches[i].id);
-      debugger
       newSwatch.setColor(allColors[i]);
-      debugger
       setBorder(newSwatch.ele);
-      debugger
       this.addSelection(newSwatch, newSwatch.ele);
       if (allColors[i][3]) {
         newSwatch.solution = true;

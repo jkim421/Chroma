@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./css/game_text.css">
     <link href="https://fonts.googleapis.com/css?family=Bungee|Bungee+Hairline|Bungee+Outline|Bungee+Shade" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Megrim" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
     <script type="application/javascript" src="./bundle/bundle.js"></script>
   </head>
@@ -18,10 +19,7 @@
     </audio>
     <div id="game-container">
       <div id="game-board">
-        <h1
-          id="title"
-          class="menu-text"
-          style="font-size: 50px; top: 280px; left: 115px">
+        <h1 id="title" class="menu-text">
           <span id="title1" class="menu-text">C</span>
           <span id="title2" class="menu-text">H</span>
           <span id="title3" class="menu-text">R</span>
@@ -42,13 +40,16 @@
           <span id="score-count" class="game-text">0</span>
         </p>
         <p id="strikes" class="game-text hidden-text">
-          <span id="strike3" class="game-text pending-strike">x</span>
-          <span id="strike2" class="game-text pending-strike">x</span>
-          <span id="strike1" class="game-text pending-strike">x</span>
+          <span id="strike3" class="game-text strikes pending-strike">x</span>
+          <span id="strike2" class="game-text strikes pending-strike">x</span>
+          <span id="strike1" class="game-text strikes pending-strike">x</span>
         </p>
         <div id="target-color" class="colorable"></div>
         <div id="color-selectors">
-          <div id="color-mixer" class="colorable"></div>
+          <div id="color-mixer" class="colorable">
+            <i id="right-icon" class="fas fa-check answer-icon game-text hidden-text"></i>
+            <i id="wrong-icon" class="fas fa-times answer-icon game-text hidden-text"></i>
+          </div>
           <div id="swatch1" class="color-swatches colorable"></div>
           <div id="swatch2" class="color-swatches colorable"></div>
           <div id="swatch3" class="color-swatches colorable"></div>

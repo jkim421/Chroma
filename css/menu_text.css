@@ -12,7 +12,10 @@
 #title {
   position: absolute;
   margin: 0;
-  transition: font-size ease-in-out 2.8s, top ease-in-out 2.8s, left ease-in-out 2.8s;
+  transition: font-size ease-in-out 2.0s, top ease-in-out 2.0s, left ease-in-out 2.0s;
+  font-size: 50px;
+  top: 280px;
+  left: 115px;
 }
 
 #start-btn {

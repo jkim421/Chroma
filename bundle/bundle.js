@@ -17330,26 +17330,41 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class Game {
-  constructor() {
+  constructor(target, swatchEles) {
+    this.target = target;
+    this.swatchEles = swatchEles;
+
     this.submission = [];
     this.swatches = [];
     this.startRender = this.startRender.bind(this);
-    this.strikes = 0;
+    this.strikeCount = 0;
     this.guessing = false;
+
+    this.mixer = document.getElementById("color-mixer");
+
+    this.restart = document.getElementById("restart-btn");
+    this.submit = document.getElementById("submit-btn");
+
+    this.score = document.getElementById("score-display");
+    this.scoreCount = document.getElementById("score-count");
+    this.strikes = document.getElementById("strikes");
+
+    this.rightIcon = document.getElementById("right-icon");
+    this.wrongIcon = document.getElementById("wrong-icon");
   }
 
-  startRender(title, startBtn, target, swatches, mixer, restart, submit, score, strikes) {
+  startRender(title, startBtn) {
     this.guessing = true;
     Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["moveTitle"])(title);
     Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["hideText"])(startBtn);
     setTimeout(() => {
-      this.renderBoard(target, swatches, mixer, restart, submit, score, strikes);}, 2000);
+      this.renderBoard(this.target, this.swatchEles);}, 1500);
   }
 
-  startGame(title, startBtn, target, swatches, mixer, startRender, restart, submit, score, strikes) {
+  startGame(title, startBtn, startRender) {
     startBtn.addEventListener("click", function handler(e) {
       e.currentTarget.removeEventListener("click", handler);
-      startRender(title, startBtn, target, swatches, mixer, restart, submit, score, strikes);
+      startRender(title, startBtn, this.target, this.swatches);
     });
   }
 
@@ -17380,79 +17395,103 @@ class Game {
     });
   }
 
-  processAnswer(restart, submit) {
+  processAnswer() {
     if (this.guessing === true && this.submission.length === 2) {
       this.guessing = false;
-      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(restart);
-      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(submit);
+      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(this.restart);
+      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(this.submit);
       if (this.submission.length === 2) {
         this.swatches.forEach( swatch => {
           Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["showMatch"])(swatch);
         });
         if (this.submission.some( swatch => swatch.solution === false )) {
+          this.wrongIcon.classList.remove("hidden-text");
           this.updateStrikes();
         } else {
           this.updateScore();
+          this.rightIcon.classList.remove("hidden-text");
         }
       }
     }
   }
 
   updateStrikes() {
-    this.strikes += 1;
-    let currentStrike = document.getElementById(`strike${this.strikes}`);
+    this.strikeCount += 1;
+    let currentStrike = document.getElementById(`strike${this.strikeCount}`);
     currentStrike.classList.add("active-strike");
+    if (this.strikeCount === 3) {
+      this.endGame();
+    }
   }
 
   updateScore() {
-    let score = document.getElementById("score-count");
-    let newScore = parseInt(score.innerHTML) + 1;
-    score.innerHTML = `${newScore}`;
+    let newScore = parseInt(this.scoreCount.innerHTML) + 1;
+    this.scoreCount.innerHTML = `${newScore}`;
   }
 
-  restartGame(target, swatches, mixer, restart, submit) {
-    if (this.guessing === false) {
-      this.guessing = true;
-      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(restart);
-      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(submit);
+  endGame() {
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["moveScore"])(this.score, this.scoreCount);
 
-      this.resetSelection();
-      mixer.style.backgroundColor = "transparent";
+    this.wrongIcon.classList.add("hidden-text");
+    this.rightIcon.classList.add("hidden-text");
 
-      let newColors = Object(_colors_js__WEBPACK_IMPORTED_MODULE_1__["getEasyColors"])();
-      let newTargetColor = target.setEasyColor(newColors[0], newColors[1]);
-      newColors = _.shuffle(newColors);
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["hideText"])(this.strikes);
+    this.restart.innerHTML = "new game";
+  }
 
-      for (let i=0; i < this.swatches.length; i++) {
-        this.swatches[i].setColor(newColors[i]);
-        if (newColors[i][3]) {
-          this.swatches[i].solution = true;
-        } else {
-          this.swatches[i].solution = false;
+  restartGame() {
+    if (this.strikeCount === 3) {
+      this.scoreCount.innerHTML = "0";
+      this.strikeCount = 0;
+      this.restart.innerHTML = "next round";
+      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["showText"])(this.strikes);
+      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["resetStrikes"])();
+      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["resetScore"])(this.score, this.scoreCount);
+      this.restartGame();
+    } else {
+      if (this.guessing === false) {
+        this.guessing = true;
+        Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(this.restart);
+        Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(this.submit);
+
+        this.resetSelection();
+        this.mixer.style.backgroundColor = "transparent";
+
+        this.wrongIcon.classList.add("hidden-text");
+        this.rightIcon.classList.add("hidden-text");
+
+        let newColors = Object(_colors_js__WEBPACK_IMPORTED_MODULE_1__["getEasyColors"])();
+        let newTargetColor = this.target.setEasyColor(newColors[0], newColors[1]);
+        newColors = _.shuffle(newColors);
+
+        for (let i=0; i < this.swatches.length; i++) {
+          this.swatches[i].setColor(newColors[i]);
+          if (newColors[i][3]) {
+            this.swatches[i].solution = true;
+          } else {
+            this.swatches[i].solution = false;
+          }
         }
       }
     }
     console.log(this.swatches);
   }
 
-  renderBoard(target, swatches, mixer, restart, submit, score, strikes) {
+  renderBoard(target, swatches) {
     let allColors = Object(_colors_js__WEBPACK_IMPORTED_MODULE_1__["getEasyColors"])();
     let targetColor = target.setEasyColor(allColors[0], allColors[1]);
 
     allColors = _.shuffle(allColors);
     Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["setBorder"])(target.ele);
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["setBorder"])(mixer);
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["showText"])(submit);
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["showText"])(score);
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["showText"])(strikes);
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["setBorder"])(this.mixer);
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["showText"])(this.submit);
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["showText"])(this.score);
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["showText"])(this.strikes);
 
     for (let i=0; i < swatches.length; i++) {
       let newSwatch = new _swatch_js__WEBPACK_IMPORTED_MODULE_0__["default"](swatches[i].id);
-      debugger
       newSwatch.setColor(allColors[i]);
-      debugger
       Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["setBorder"])(newSwatch.ele);
-      debugger
       this.addSelection(newSwatch, newSwatch.ele);
       if (allColors[i][3]) {
         newSwatch.solution = true;
@@ -17495,37 +17534,27 @@ __webpack_require__.r(__webpack_exports__);
 document.addEventListener("DOMContentLoaded", () => {
   const title = document.getElementById("title");
   const startBtn = document.getElementById("start-btn");
-  const mixer = document.getElementById("color-mixer");
 
-  const mute = document.getElementById("mute-btn");
   const player = document.getElementById("music-player");
+  const mute = document.getElementById("mute-btn");
 
   const restart = document.getElementById("restart-btn");
   const submit = document.getElementById("submit-btn");
-  const score = document.getElementById("score-display");
-  const strikes = document.getElementById("strikes");
 
   Object(_music_js__WEBPACK_IMPORTED_MODULE_4__["setMute"])(mute, player);
 
-  let game = new _game_js__WEBPACK_IMPORTED_MODULE_2__["default"];
   let target = new _target_js__WEBPACK_IMPORTED_MODULE_0__["default"];
   let swatchEles = Array.from(
     document.getElementsByClassName("color-swatches"));
+  let game = new _game_js__WEBPACK_IMPORTED_MODULE_2__["default"](target, swatchEles);
 
   game.startGame(
     title,
     startBtn,
-    target,
-    swatchEles,
-    mixer,
-    game.startRender,
-    restart,
-    submit,
-    score,
-    strikes);
+    game.startRender);
 
   restart.addEventListener("click", () => {
-    game.restartGame(target, swatchEles, mixer, restart, submit);
+    game.restartGame();
   });
 
   submit.addEventListener("click", () => {
@@ -17540,7 +17569,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /*!***********************!*\
   !*** ./src/layout.js ***!
   \***********************/
-/*! exports provided: setBorder, removeBorder, moveTitle, hideText, showText, toggleText, showMatch */
+/*! exports provided: setBorder, removeBorder, moveTitle, moveScore, resetScore, hideText, showText, toggleText, showMatch, resetStrikes */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17548,10 +17577,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setBorder", function() { return setBorder; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeBorder", function() { return removeBorder; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "moveTitle", function() { return moveTitle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "moveScore", function() { return moveScore; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resetScore", function() { return resetScore; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hideText", function() { return hideText; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showText", function() { return showText; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toggleText", function() { return toggleText; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showMatch", function() { return showMatch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resetStrikes", function() { return resetStrikes; });
 const setBorder = (ele) => {
   ele.classList.add("visible-colorable");
 };
@@ -17562,6 +17594,16 @@ const removeBorder = (ele) => {
 
 const moveTitle = (title) => {
   title.setAttribute("style", "font-size: 20px; top: 20px; left: 20px");
+};
+
+const moveScore = (score, scoreCount) => {
+  score.setAttribute("style", "font-size: 50px; top: 285px; right: 115px;");
+  scoreCount.setAttribute("style", "font-size: 50px;");
+};
+
+const resetScore = (score, scoreCount) => {
+  score.setAttribute("style", "");
+  scoreCount.setAttribute("style", "");
 };
 
 const hideText = (ele) => {
@@ -17584,6 +17626,14 @@ const showMatch = (swatch) => {
     swatch.ele.classList.add("other-swatch");
     swatch.ele.classList.add("hidden-swatch");
   }
+};
+
+const resetStrikes = () => {
+  const strikes = Array.from(document.getElementsByClassName("strikes"));
+  debugger
+  strikes.forEach( strike => {
+    strike.classList.remove("active-strike");
+  })
 };
 
 

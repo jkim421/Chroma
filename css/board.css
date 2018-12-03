@@ -50,12 +50,12 @@
   border-radius: 50%;
   background: none;
   position: absolute;
-  top: 100px;
+  top: 130px;
   left: 100px;
 }
 
 .colorable {
-  transition: background-color 1.5s, border 1.5s, visibility 1.5s, opacity 1.5s;
+  transition: background-color 1.5s, border 1s, visibility 1s, opacity 1s;
   border: 1px solid transparent;
 }
 
@@ -92,32 +92,32 @@
 }
 
 #swatch1 {
-  top: 25px;
+  top: 55px;
   left: 175px;
 }
 
 #swatch2 {
-  top: 100px;
+  top: 130px;
   left: 305px;
 }
 
 #swatch3 {
-  top: 250px;
+  top: 280px;
   left: 305px;
 }
 
 #swatch4 {
-  top: 325px;
+  top: 355px;
   left: 175px;
 }
 
 #swatch5 {
-  top: 250px;
+  top: 280px;
   left: 45px;
 }
 
 #swatch6 {
-  top: 100px;
+  top: 130px;
   left: 45px;
 }
 

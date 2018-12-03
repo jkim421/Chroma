@@ -1,11 +1,18 @@
 .game-text {
   font-family: 'Bungee', cursive;
-  transition: visibility 1.5s, opacity 1.5s, color 1.5s;
+  transition:
+    visibility 1.5s,
+    opacity 1.5s,
+    color 1.5s,
+    font-size ease-in-out 2.0s,
+    top ease-in-out 2.0s,
+    right ease-in-out 2.0s,
+    left ease-in-out 2.0s;
   text-shadow:
-  -1px -1px 0 #000,
-  1px -1px 0 #000,
-  -1px 1px 0 #000,
-  1px 1px 0 #000;
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
   color: #eee;
   z-index: 2;
 }
@@ -25,13 +32,13 @@
 
 #submit-btn {
   position: absolute;
-  top: 350px;
+  top: 352px;
   right: 20px;
 }
 
 #restart-btn {
   position: absolute;
-  top: 350px;
+  top: 352px;
   left: 20px;
 }
 
@@ -53,4 +60,28 @@
 
 .active-strike {
   color: red;
+}
+
+.answer-icon {
+  font-size: 64px;
+  position: absolute;
+  top: 65px;
+  left: 80px;
+  /* text-shadow:
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000; */
+}
+
+.answer-icon:hover {
+  cursor: default;
+}
+
+#right-icon {
+  color: #009900;
+}
+
+#wrong-icon {
+  color: #cc0000;
 }
