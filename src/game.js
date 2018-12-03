@@ -17,10 +17,11 @@ class Game {
     this.swatches = [];
     this.startRender = this.startRender.bind(this);
     this.strikes = 0;
-    this.guessing = true;
+    this.guessing = false;
   }
 
   startRender(title, startBtn, target, swatches, mixer, restart, submit, score, strikes) {
+    this.guessing = true;
     moveTitle(title);
     hideText(startBtn);
     setTimeout(() => {
@@ -62,16 +63,19 @@ class Game {
   }
 
   processAnswer(restart, submit) {
-    toggleText(restart);
-    toggleText(submit);
-    if (this.submission.length === 2) {
-      this.swatches.forEach( swatch => {
-        showMatch(swatch);
-      });
-      if (this.submission.some( swatch => swatch.solution === false )) {
-        this.updateStrikes();
-      } else {
-        this.updateScore();
+    if (this.guessing === true && this.submission.length === 2) {
+      this.guessing = false;
+      toggleText(restart);
+      toggleText(submit);
+      if (this.submission.length === 2) {
+        this.swatches.forEach( swatch => {
+          showMatch(swatch);
+        });
+        if (this.submission.some( swatch => swatch.solution === false )) {
+          this.updateStrikes();
+        } else {
+          this.updateScore();
+        }
       }
     }
   }
@@ -89,22 +93,25 @@ class Game {
   }
 
   restartGame(target, swatches, mixer, restart, submit) {
-    toggleText(restart);
-    toggleText(submit);
+    if (this.guessing === false) {
+      this.guessing = true;
+      toggleText(restart);
+      toggleText(submit);
 
-    this.resetSelection();
-    mixer.style.backgroundColor = "transparent";
+      this.resetSelection();
+      mixer.style.backgroundColor = "transparent";
 
-    let newColors = getEasyColors();
-    let newTargetColor = target.setEasyColor(newColors[0], newColors[1]);
-    newColors = _.shuffle(newColors);
+      let newColors = getEasyColors();
+      let newTargetColor = target.setEasyColor(newColors[0], newColors[1]);
+      newColors = _.shuffle(newColors);
 
-    for (let i=0; i < this.swatches.length; i++) {
-      this.swatches[i].setColor(newColors[i]);
-      if (newColors[i][3]) {
-        this.swatches[i].solution = true;
-      } else {
-        this.swatches[i].solution = false;
+      for (let i=0; i < this.swatches.length; i++) {
+        this.swatches[i].setColor(newColors[i]);
+        if (newColors[i][3]) {
+          this.swatches[i].solution = true;
+        } else {
+          this.swatches[i].solution = false;
+        }
       }
     }
     console.log(this.swatches);
@@ -123,8 +130,11 @@ class Game {
 
     for (let i=0; i < swatches.length; i++) {
       let newSwatch = new Swatch(swatches[i].id);
+      debugger
       newSwatch.setColor(allColors[i]);
+      debugger
       setBorder(newSwatch.ele);
+      debugger
       this.addSelection(newSwatch, newSwatch.ele);
       if (allColors[i][3]) {
         newSwatch.solution = true;

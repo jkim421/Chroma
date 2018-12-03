@@ -55,7 +55,7 @@
 }
 
 .colorable {
-  transition: background-color 2s, border 1s;
+  transition: background-color 1.5s, border 1.5s, visibility 1.5s, opacity 1.5s;
   border: 1px solid transparent;
 }
 
@@ -68,7 +68,6 @@
   width: 50px;
   border-radius: 50%;
   position: absolute;
-  transition: visibility 1s, opacity 1s;
 }
 
 .color-swatches:hover {

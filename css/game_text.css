@@ -1,6 +1,6 @@
 .game-text {
   font-family: 'Bungee', cursive;
-  transition: visibility 1s, opacity 2s, color 2s;
+  transition: visibility 1.5s, opacity 1.5s, color 1.5s;
   text-shadow:
   -1px -1px 0 #000,
   1px -1px 0 #000,
@@ -15,7 +15,7 @@
 }
 
 .short-trans {
-  transition: visibility 1s, opacity 1s, color 2s;
+  transition: visibility 1.5s, opacity 1.5s, color 1.5s;
 }
 
 .hidden-text {

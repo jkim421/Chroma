@@ -17335,10 +17335,11 @@ class Game {
     this.swatches = [];
     this.startRender = this.startRender.bind(this);
     this.strikes = 0;
-    this.guessing = true;
+    this.guessing = false;
   }
 
   startRender(title, startBtn, target, swatches, mixer, restart, submit, score, strikes) {
+    this.guessing = true;
     Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["moveTitle"])(title);
     Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["hideText"])(startBtn);
     setTimeout(() => {
@@ -17380,16 +17381,19 @@ class Game {
   }
 
   processAnswer(restart, submit) {
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(restart);
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(submit);
-    if (this.submission.length === 2) {
-      this.swatches.forEach( swatch => {
-        Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["showMatch"])(swatch);
-      });
-      if (this.submission.some( swatch => swatch.solution === false )) {
-        this.updateStrikes();
-      } else {
-        this.updateScore();
+    if (this.guessing === true && this.submission.length === 2) {
+      this.guessing = false;
+      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(restart);
+      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(submit);
+      if (this.submission.length === 2) {
+        this.swatches.forEach( swatch => {
+          Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["showMatch"])(swatch);
+        });
+        if (this.submission.some( swatch => swatch.solution === false )) {
+          this.updateStrikes();
+        } else {
+          this.updateScore();
+        }
       }
     }
   }
@@ -17407,22 +17411,25 @@ class Game {
   }
 
   restartGame(target, swatches, mixer, restart, submit) {
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(restart);
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(submit);
+    if (this.guessing === false) {
+      this.guessing = true;
+      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(restart);
+      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(submit);
 
-    this.resetSelection();
-    mixer.style.backgroundColor = "transparent";
+      this.resetSelection();
+      mixer.style.backgroundColor = "transparent";
 
-    let newColors = Object(_colors_js__WEBPACK_IMPORTED_MODULE_1__["getEasyColors"])();
-    let newTargetColor = target.setEasyColor(newColors[0], newColors[1]);
-    newColors = _.shuffle(newColors);
+      let newColors = Object(_colors_js__WEBPACK_IMPORTED_MODULE_1__["getEasyColors"])();
+      let newTargetColor = target.setEasyColor(newColors[0], newColors[1]);
+      newColors = _.shuffle(newColors);
 
-    for (let i=0; i < this.swatches.length; i++) {
-      this.swatches[i].setColor(newColors[i]);
-      if (newColors[i][3]) {
-        this.swatches[i].solution = true;
-      } else {
-        this.swatches[i].solution = false;
+      for (let i=0; i < this.swatches.length; i++) {
+        this.swatches[i].setColor(newColors[i]);
+        if (newColors[i][3]) {
+          this.swatches[i].solution = true;
+        } else {
+          this.swatches[i].solution = false;
+        }
       }
     }
     console.log(this.swatches);
@@ -17441,8 +17448,11 @@ class Game {
 
     for (let i=0; i < swatches.length; i++) {
       let newSwatch = new _swatch_js__WEBPACK_IMPORTED_MODULE_0__["default"](swatches[i].id);
+      debugger
       newSwatch.setColor(allColors[i]);
+      debugger
       Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["setBorder"])(newSwatch.ele);
+      debugger
       this.addSelection(newSwatch, newSwatch.ele);
       if (allColors[i][3]) {
         newSwatch.solution = true;
