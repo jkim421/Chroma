@@ -5,6 +5,7 @@
     <title>Chroma</title>
     <link rel="stylesheet" href="../css/board.css">
     <link rel="stylesheet" href="../css/menu_text.css">
+    <link rel="stylesheet" href="../css/game_text.css">
     <link href="https://fonts.googleapis.com/css?family=Bungee|Bungee+Hairline|Bungee+Outline|Bungee+Shade" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Megrim" rel="stylesheet">
 
@@ -12,8 +13,6 @@
   </head>
   <body>
     <button id="mute-btn" class="game-button">Mute</button>
-    <button id="restart-btn" class="game-button">Restart</button>
-    
     <audio id="music-player" loop>
       <source src="https://s3.amazonaws.com/chroma-prod/chris_zabriskie_a_new_day_in_a_new_sector.mp3" type="audio/mp3">
     </audio>
@@ -36,6 +35,16 @@
           <span id="start3" class="menu-text">A</span>
           <span id="start4" class="menu-text">R</span>
           <span id="start5" class="menu-text">T</span>
+        </p>
+        <p id="submit-btn" class="game-text hidden-text">submit guess</p>
+        <p id="restart-btn" class="game-text hidden-text">next round</p>
+        <p id="score-display" class="game-text hidden-text">score:
+          <span id="score-count" class="game-text">0</span>
+        </p>
+        <p id="strikes" class="game-text hidden-text">
+          <span id="strike3" class="game-text pending-strike">x</span>
+          <span id="strike2" class="game-text pending-strike">x</span>
+          <span id="strike1" class="game-text pending-strike">x</span>
         </p>
         <div id="target-color" class="colorable"></div>
         <div id="color-selectors">

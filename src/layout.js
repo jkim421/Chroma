@@ -11,9 +11,23 @@ export const moveTitle = (title) => {
 };
 
 export const hideText = (ele) => {
-  ele.classList.toggle("hidden-text");
+  ele.classList.add("hidden-text");
 };
 
 export const showText = (ele) => {
+  ele.classList.remove("hidden-text");
+};
+
+export const toggleText = (ele) => {
   ele.classList.toggle("hidden-text");
+};
+
+export const showMatch = (swatch) => {
+  swatch.ele.classList.remove("selected-swatch");
+  if (swatch.solution) {
+    swatch.ele.classList.add("solution-swatch");
+  } else {
+    swatch.ele.classList.add("other-swatch");
+    swatch.ele.classList.add("hidden-swatch");
+  }
 };

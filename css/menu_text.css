@@ -26,11 +26,6 @@
   cursor: pointer;
 }
 
-.hidden-text {
-  visibility: hidden;
-  opacity: 0;
-}
-
 #title1 {
   animation: 15s infinite alternate-reverse linear title1;
 }

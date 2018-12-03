@@ -14,6 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const player = document.getElementById("music-player");
 
   const restart = document.getElementById("restart-btn");
+  const submit = document.getElementById("submit-btn");
+  const score = document.getElementById("score-display");
+  const strikes = document.getElementById("strikes");
 
   setMute(mute, player);
 
@@ -22,9 +25,23 @@ document.addEventListener("DOMContentLoaded", () => {
   let swatchEles = Array.from(
     document.getElementsByClassName("color-swatches"));
 
-  game.startGame(title, startBtn, target, swatchEles, mixer, game.startRender);
+  game.startGame(
+    title,
+    startBtn,
+    target,
+    swatchEles,
+    mixer,
+    game.startRender,
+    restart,
+    submit,
+    score,
+    strikes);
 
   restart.addEventListener("click", () => {
-    game.restartGame(target, swatchEles, mixer);
+    game.restartGame(target, swatchEles, mixer, restart);
+  });
+
+  submit.addEventListener("click", () => {
+    game.processAnswer(restart);
   });
 });

@@ -1,0 +1,52 @@
+.game-text {
+  font-family: 'Bungee', cursive;
+  transition: visibility 1s, opacity 2s, color 2s;
+  text-shadow:
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  color: #eee;
+  z-index: 2;
+}
+
+.game-text:hover {
+  cursor: pointer;
+}
+
+.hidden-text {
+  visibility: hidden;
+  opacity: 0;
+}
+
+#submit-btn {
+  position: absolute;
+  top: 350px;
+  right: 20px;
+}
+
+#restart-btn {
+  position: absolute;
+  top: 350px;
+  left: 20px;
+}
+
+#score-display {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+#strikes {
+  position: absolute;
+  top: 30px;
+  right: 20px;
+}
+
+.pending-strike {
+  color: white;
+}
+
+.active-strike {
+  color: red;
+}

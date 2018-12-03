@@ -1,38 +1,38 @@
 import Target from './swatch.js';
 import Swatch from './swatch.js';
 import { getEasyColors, getHardColors } from './colors.js';
-import { setBorder, removeBorder, hideText, showText, moveTitle } from './layout.js';
+import {
+  setBorder,
+  removeBorder,
+  hideText,
+  showText,
+  toggleText,
+  moveTitle,
+  showMatch } from './layout.js';
 import { shuffle, sample } from 'lodash';
 
 class Game {
   constructor() {
     this.submission = [];
     this.swatches = [];
-    this.timeoutFunc = null;
     this.startRender = this.startRender.bind(this);
+    this.strikes = 0;
+    this.playing = true;
   }
 
-  startRender(title, startBtn, target, swatches, mixer, e) {
+  startRender(title, startBtn, target, swatches, mixer, restart, submit, score, strikes) {
     moveTitle(title);
     hideText(startBtn);
     setTimeout(() => {
-      this.renderBoard(target, swatches, mixer);}, 2000);
+      this.renderBoard(target, swatches, mixer, restart, submit, score, strikes);}, 2000);
   }
 
-  startGame(title, startBtn, target, swatches, mixer, startRender) {
+  startGame(title, startBtn, target, swatches, mixer, startRender, restart, submit, score, strikes) {
     startBtn.addEventListener("click", function handler(e) {
       e.currentTarget.removeEventListener("click", handler);
-      startRender(title, startBtn, target, swatches, mixer);
+      startRender(title, startBtn, target, swatches, mixer, restart, submit, score, strikes);
     });
   }
-
-  // startGame(title, startBtn, target, swatches, mixer) {
-  //   startBtn.addEventListener("click", (e) => {
-  //     moveTitle(title);
-  //     hideText(startBtn);
-  //     setTimeout(() => this.renderBoard(target, swatches, mixer), 2000);
-  //   }, {once: true});
-  // }
 
   updateSelections(swatchEle) {
     if (this.submission.length > 2) {
@@ -54,12 +54,43 @@ class Game {
   resetSelection() {
     this.submission.forEach( swatch => swatch.ele.classList.remove("selected-swatch"));
     this.submission = [];
+    this.swatches.forEach ( swatch => {
+      swatch.ele.classList.remove("solution-swatch");
+      swatch.ele.classList.remove("other-swatch");
+      swatch.ele.classList.remove("hidden-swatch");
+    })
   }
 
-  restartGame(target, swatches, mixer) {
-    mixer.style.backgroundColor = "transparent";
+  processAnswer(restart) {
+    toggleText(restart);
+    if (this.submission.length === 2) {
+      this.swatches.forEach( swatch => {
+        showMatch(swatch);
+      });
+      if (this.submission.some( swatch => swatch.solution === false )) {
+        this.updateStrikes();
+      } else {
+        this.updateScore();
+      }
+    }
+  }
 
+  updateStrikes() {
+    this.strikes += 1;
+    let currentStrike = document.getElementById(`strike${this.strikes}`);
+    currentStrike.classList.add("active-strike");
+  }
+
+  updateScore() {
+    let score = document.getElementById("score-count");
+    let newScore = parseInt(score.innerHTML) + 1;
+    score.innerHTML = `${newScore}`;
+  }
+
+  restartGame(target, swatches, mixer, restart) {
+    toggleText(restart);
     this.resetSelection();
+    mixer.style.backgroundColor = "transparent";
 
     let newColors = getEasyColors();
     let newTargetColor = target.setEasyColor(newColors[0], newColors[1]);
@@ -77,13 +108,16 @@ class Game {
     console.log(this.swatches);
   }
 
-  renderBoard(target, swatches, mixer) {
+  renderBoard(target, swatches, mixer, restart, submit, score, strikes) {
     let allColors = getEasyColors();
     let targetColor = target.setEasyColor(allColors[0], allColors[1]);
 
     allColors = _.shuffle(allColors);
     setBorder(target.ele);
     setBorder(mixer);
+    showText(submit);
+    showText(score);
+    showText(strikes);
 
     for (let i=0; i < swatches.length; i++) {
       let newSwatch = new Swatch(swatches[i].id);

@@ -68,6 +68,7 @@
   width: 50px;
   border-radius: 50%;
   position: absolute;
+  transition: visibility 1s, opacity 1s;
 }
 
 .color-swatches:hover {
@@ -76,6 +77,19 @@
 
 .selected-swatch {
   border-color: white;
+}
+
+.solution-swatch {
+  border-color: green;
+}
+
+.other-swatch {
+  border-color: red;
+}
+
+.hidden-swatch {
+  visibility: hidden;
+  opacity: 0;
 }
 
 #swatch1 {
