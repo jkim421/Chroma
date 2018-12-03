@@ -38,10 +38,10 @@ document.addEventListener("DOMContentLoaded", () => {
     strikes);
 
   restart.addEventListener("click", () => {
-    game.restartGame(target, swatchEles, mixer, restart);
+    game.restartGame(target, swatchEles, mixer, restart, submit);
   });
 
   submit.addEventListener("click", () => {
-    game.processAnswer(restart);
+    game.processAnswer(restart, submit);
   });
 });

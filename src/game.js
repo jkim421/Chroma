@@ -17,7 +17,7 @@ class Game {
     this.swatches = [];
     this.startRender = this.startRender.bind(this);
     this.strikes = 0;
-    this.playing = true;
+    this.guessing = false;
   }
 
   startRender(title, startBtn, target, swatches, mixer, restart, submit, score, strikes) {
@@ -58,11 +58,12 @@ class Game {
       swatch.ele.classList.remove("solution-swatch");
       swatch.ele.classList.remove("other-swatch");
       swatch.ele.classList.remove("hidden-swatch");
-    })
+    });
   }
 
-  processAnswer(restart) {
+  processAnswer(restart, submit) {
     toggleText(restart);
+    toggleText(submit);
     if (this.submission.length === 2) {
       this.swatches.forEach( swatch => {
         showMatch(swatch);
@@ -87,8 +88,10 @@ class Game {
     score.innerHTML = `${newScore}`;
   }
 
-  restartGame(target, swatches, mixer, restart) {
+  restartGame(target, swatches, mixer, restart, submit) {
     toggleText(restart);
+    toggleText(submit);
+
     this.resetSelection();
     mixer.style.backgroundColor = "transparent";
 
@@ -104,7 +107,6 @@ class Game {
         this.swatches[i].solution = false;
       }
     }
-
     console.log(this.swatches);
   }
 

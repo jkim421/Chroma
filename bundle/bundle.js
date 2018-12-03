@@ -17335,7 +17335,7 @@ class Game {
     this.swatches = [];
     this.startRender = this.startRender.bind(this);
     this.strikes = 0;
-    this.playing = true;
+    this.guessing = false;
   }
 
   startRender(title, startBtn, target, swatches, mixer, restart, submit, score, strikes) {
@@ -17376,11 +17376,12 @@ class Game {
       swatch.ele.classList.remove("solution-swatch");
       swatch.ele.classList.remove("other-swatch");
       swatch.ele.classList.remove("hidden-swatch");
-    })
+    });
   }
 
-  processAnswer(restart) {
+  processAnswer(restart, submit) {
     Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(restart);
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(submit);
     if (this.submission.length === 2) {
       this.swatches.forEach( swatch => {
         Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["showMatch"])(swatch);
@@ -17405,8 +17406,10 @@ class Game {
     score.innerHTML = `${newScore}`;
   }
 
-  restartGame(target, swatches, mixer, restart) {
+  restartGame(target, swatches, mixer, restart, submit) {
     Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(restart);
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(submit);
+
     this.resetSelection();
     mixer.style.backgroundColor = "transparent";
 
@@ -17422,7 +17425,6 @@ class Game {
         this.swatches[i].solution = false;
       }
     }
-
     console.log(this.swatches);
   }
 
@@ -17513,11 +17515,11 @@ document.addEventListener("DOMContentLoaded", () => {
     strikes);
 
   restart.addEventListener("click", () => {
-    game.restartGame(target, swatchEles, mixer, restart);
+    game.restartGame(target, swatchEles, mixer, restart, submit);
   });
 
   submit.addEventListener("click", () => {
-    game.processAnswer(restart);
+    game.processAnswer(restart, submit);
   });
 });
 
