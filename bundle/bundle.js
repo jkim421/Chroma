@@ -17335,7 +17335,7 @@ class Game {
     this.swatches = [];
     this.startRender = this.startRender.bind(this);
     this.strikes = 0;
-    this.guessing = false;
+    this.guessing = true;
   }
 
   startRender(title, startBtn, target, swatches, mixer, restart, submit, score, strikes) {
