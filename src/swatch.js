@@ -7,7 +7,7 @@ class Swatch {
 
   setColor(colorArr) {
     let rgb;
-    rgb = `rgb(${colorArr[0]}, ${colorArr[1]}, ${colorArr[2]})`;
+    rgb = `rgba(${colorArr[0]}, ${colorArr[1]}, ${colorArr[2]}, 0.8)`;
     this.ele.style.backgroundColor = rgb;
   }
 

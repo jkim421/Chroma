@@ -9,13 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const title = document.getElementById("title");
   const startBtn = document.getElementById("start-btn");
 
-  const player = document.getElementById("music-player");
-  const mute = document.getElementById("mute-btn");
-
   const restart = document.getElementById("restart-btn");
   const submit = document.getElementById("submit-btn");
 
-  setMute(mute, player);
+  setMute();
 
   let target = new Target;
   let swatchEles = Array.from(

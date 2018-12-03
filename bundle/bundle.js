@@ -17535,13 +17535,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const title = document.getElementById("title");
   const startBtn = document.getElementById("start-btn");
 
-  const player = document.getElementById("music-player");
-  const mute = document.getElementById("mute-btn");
-
   const restart = document.getElementById("restart-btn");
   const submit = document.getElementById("submit-btn");
 
-  Object(_music_js__WEBPACK_IMPORTED_MODULE_4__["setMute"])(mute, player);
+  Object(_music_js__WEBPACK_IMPORTED_MODULE_4__["setMute"])();
 
   let target = new _target_js__WEBPACK_IMPORTED_MODULE_0__["default"];
   let swatchEles = Array.from(
@@ -17649,14 +17646,23 @@ const resetStrikes = () => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setMute", function() { return setMute; });
-const setMute = (mute, player) => {
-    mute.addEventListener("click", () => {
+const setMute = () => {
+  const player = document.getElementById("music-player");
+  const musicToggle = document.getElementById("music-btn");
+  const musicOn = document.getElementById("music-on");
+  const musicOff = document.getElementById("music-off");
+
+  musicOn.style.visibility = "hidden";
+
+  musicToggle.addEventListener("click", () => {
     if (player.muted) {
-      mute.innerHTML = "Mute";
+      musicOn.style.visibility = "visible";
+      musicOff.style.visibility = "hidden";
       player.muted = false;
       player.play();
     } else {
-      mute.innerHTML = "Unmute";
+      musicOn.style.visibility = "hidden";
+      musicOff.style.visibility = "visible";
       player.muted = true;
       player.pause();
     }
@@ -17684,7 +17690,7 @@ class Swatch {
 
   setColor(colorArr) {
     let rgb;
-    rgb = `rgb(${colorArr[0]}, ${colorArr[1]}, ${colorArr[2]})`;
+    rgb = `rgba(${colorArr[0]}, ${colorArr[1]}, ${colorArr[2]}, 0.8)`;
     this.ele.style.backgroundColor = rgb;
   }
 
@@ -17728,7 +17734,7 @@ class Target {
     let targetR = Math.round(Math.sqrt(((rgbOne[0]**2 + rgbTwo[0]**2)/2)));
     let targetG = Math.round(Math.sqrt(((rgbOne[1]**2 + rgbTwo[1]**2)/2)));
     let targetB = Math.round(Math.sqrt(((rgbOne[2]**2 + rgbTwo[2]**2)/2)));
-    const targetColor = `rgb(${targetR},${targetG},${targetB})`;
+    const targetColor = `rgba(${targetR},${targetG},${targetB}, 0.8)`;
     this.ele.style.backgroundColor = targetColor;
     return [targetR, targetG, targetB];
   }
@@ -17737,7 +17743,7 @@ class Target {
     let targetR = Math.round((rgbOne[0] + rgbTwo[0] + rgbThree[0])/3);
     let targetG = Math.round((rgbOne[1] + rgbTwo[1] + rgbThree[1])/3);
     let targetB = Math.round((rgbOne[2] + rgbTwo[2]) + rgbThree[2]/3);
-    const targetColor = `rgb(${targetR},${targetG},${targetB})`;
+    const targetColor = `rgba(${targetR},${targetG},${targetB}, 0.8)`;
     this.ele.style.backgroundColor = targetColor;
     return [targetR, targetG, targetB];
   }
