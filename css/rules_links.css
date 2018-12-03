@@ -1,0 +1,20 @@
+.rules {
+  font-family: 'Bungee Hairline', cursive;
+  color: black;
+  font-size: 24px;
+}
+
+.links-section {
+  display: flex;
+}
+
+.links-bar {
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.link-icon {
+  text-decoration: none;
+  color: #8d5eb1;
+  font-size: 48px;
+}

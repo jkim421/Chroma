@@ -3,9 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title>Chroma</title>
+    <link rel="shortcut icon" type="image/png" href="./assets/wheel.png"/>
     <link rel="stylesheet" href="./css/board.css">
     <link rel="stylesheet" href="./css/menu_text.css">
     <link rel="stylesheet" href="./css/game_text.css">
+    <link rel="stylesheet" href="./css/rules_links.css">
     <link href="https://fonts.googleapis.com/css?family=Bungee|Bungee+Hairline|Bungee+Outline|Bungee+Shade" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Megrim" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -13,9 +15,23 @@
     <script type="application/javascript" src="./bundle/bundle.js"></script>
   </head>
   <body>
-    <audio id="music-player" loop>
+    <audio id="music-player" muted loop>
       <source src="https://s3.amazonaws.com/chroma-prod/chris_zabriskie_a_new_day_in_a_new_sector.mp3" type="audio/mp3">
     </audio>
+    <div class="rules">
+      How to Play
+      <ol>
+        <li>
+          Don't suck
+        </li>
+        <li>
+          Make the magic happen
+        </li>
+        <li>
+          Don't suck
+        </li>
+      </ol>
+    </div>
     <div id="game-container">
       <div id="game-board">
         <div id="music-btn">
@@ -60,7 +76,20 @@
           <div id="swatch5" class="color-swatches colorable"></div>
           <div id="swatch6" class="color-swatches colorable"></div>
         </div>
-      <div>
+      </div>
     </div>
+    <section class="links-section">
+      <div class="links-bar">
+        <a class="link-icon" href="https://github.com/jkim421/Chroma" target=_none>
+          <i class="fab fa-github-square"></i>
+        </a>
+        <a class="link-icon" href="https://www.linkedin.com/in/john-j-kim-b0236536/" target=_none>
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a class="link-icon" href="https://www.google.com" target=_none>
+          <i class="fas fa-home"></i>
+        </a>
+      </div>
+    </section>
   </body>
 </html>

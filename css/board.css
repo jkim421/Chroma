@@ -1,3 +1,7 @@
+body {
+  background-color: #ddd;
+}
+
 #game-container {
   display: flex;
   align-items: center;
