@@ -17474,7 +17474,6 @@ class Game {
         }
       }
     }
-    console.log(this.swatches);
   }
 
   renderBoard(target, swatches) {
@@ -17499,7 +17498,6 @@ class Game {
       this.swatches.push(newSwatch);
     }
 
-    console.log(this.swatches);
     return this.swatches;
   }
 }

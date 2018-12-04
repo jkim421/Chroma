@@ -31,7 +31,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     colorSwatches.push(newSwatch);
   }
-
-  console.log(targetColor);
-  console.log(colorSwatches);
 });
