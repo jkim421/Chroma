@@ -1,7 +1,14 @@
 .rules {
-  font-family: 'Bungee Hairline', cursive;
+  font-family: 'Karla', sans-serif;
   color: black;
-  font-size: 24px;
+  font-size: 20px;
+  width: 300px;
+  position: absolute;
+  display: inline-block;
+}
+
+.how-to {
+  text-align: center;
 }
 
 .links-section {
