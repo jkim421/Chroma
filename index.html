@@ -18,81 +18,83 @@
     <audio id="music-player" muted loop>
       <source src="https://s3.amazonaws.com/chroma-prod/chris_zabriskie_a_new_day_in_a_new_sector.mp3" type="audio/mp3">
     </audio>
-    <div class="rules">
-      <p class="how-to">How to Play</p>
-      <ul>
-        <li>
-          The color on top is the target color
-        </li>
-        <li>
-          Pick the two colors that you think mix to create the target color
-        </li>
-        <li>
-          The mixer will toggle between the two most recently selected colors
-        </li>
-        <li>
-          Use the mixer! The target color will briefly appear in the mixer when you select the correct combination
-        </li>
-      </ol>
-    </div>
-    <div id="game-container">
-      <div id="game-board">
-        <div id="music-btn">
-          <i id="music-on" class="fas fa-volume-up music-icon"></i>
-          <i id="music-off" class="fas fa-volume-mute music-icon"></i>
-        </div>
-        <h1 id="title" class="menu-text">
-          <span id="title1" class="menu-text">C</span>
-          <span id="title2" class="menu-text">H</span>
-          <span id="title3" class="menu-text">R</span>
-          <span id="title4" class="menu-text">O</span>
-          <span id="title5" class="menu-text">M</span>
-          <span id="title6" class="menu-text">A</span>
-        </h1>
-        <p id="start-btn" class="menu-text">
-          <span id="start1" class="menu-text">S</span>
-          <span id="start2" class="menu-text">T</span>
-          <span id="start3" class="menu-text">A</span>
-          <span id="start4" class="menu-text">R</span>
-          <span id="start5" class="menu-text">T</span>
-        </p>
-        <p id="submit-btn" class="game-text hidden-text">submit guess</p>
-        <p id="restart-btn" class="game-text short-trans hidden-text">next round</p>
-        <p id="score-display" class="game-text hidden-text">score:
-          <span id="score-count" class="game-text">0</span>
-        </p>
-        <p id="strikes" class="game-text hidden-text">
-          <span id="strike3" class="game-text strikes pending-strike">x</span>
-          <span id="strike2" class="game-text strikes pending-strike">x</span>
-          <span id="strike1" class="game-text strikes pending-strike">x</span>
-        </p>
-        <div id="target-color" class="colorable"></div>
-        <div id="color-selectors">
-          <div id="color-mixer" class="colorable">
-            <i id="right-icon" class="fas fa-check answer-icon game-text hidden-text"></i>
-            <i id="wrong-icon" class="fas fa-times answer-icon game-text hidden-text"></i>
+    <main class="page-content">
+      <div class="rules">
+        <p class="how-to">How to Play</p>
+        <ul>
+          <li>
+            The color on top is the target color
+          </li>
+          <li>
+            Pick the two colors that you think mix to create the target color
+          </li>
+          <li>
+            The mixer will toggle between the two most recently selected colors
+          </li>
+          <li>
+            Use the mixer! The target color will briefly appear in the mixer when you select the correct combination
+          </li>
+        </ul>
+      </div>
+      <div id="game-container">
+        <div id="game-board">
+          <div id="music-btn">
+            <i id="music-on" class="fas fa-volume-up music-icon"></i>
+            <i id="music-off" class="fas fa-volume-mute music-icon"></i>
           </div>
-          <div id="swatch1" class="color-swatches colorable"></div>
-          <div id="swatch2" class="color-swatches colorable"></div>
-          <div id="swatch3" class="color-swatches colorable"></div>
-          <div id="swatch4" class="color-swatches colorable"></div>
-          <div id="swatch5" class="color-swatches colorable"></div>
-          <div id="swatch6" class="color-swatches colorable"></div>
+          <h1 id="title" class="menu-text">
+            <span id="title1" class="menu-text">C</span>
+            <span id="title2" class="menu-text">H</span>
+            <span id="title3" class="menu-text">R</span>
+            <span id="title4" class="menu-text">O</span>
+            <span id="title5" class="menu-text">M</span>
+            <span id="title6" class="menu-text">A</span>
+          </h1>
+          <p id="start-btn" class="menu-text">
+            <span id="start1" class="menu-text">S</span>
+            <span id="start2" class="menu-text">T</span>
+            <span id="start3" class="menu-text">A</span>
+            <span id="start4" class="menu-text">R</span>
+            <span id="start5" class="menu-text">T</span>
+          </p>
+          <p id="submit-btn" class="game-text hidden-text">submit guess</p>
+          <p id="restart-btn" class="game-text short-trans hidden-text">next round</p>
+          <p id="score-display" class="game-text hidden-text">score:
+            <span id="score-count" class="game-text">0</span>
+          </p>
+          <p id="strikes" class="game-text hidden-text">
+            <span id="strike3" class="game-text strikes pending-strike">x</span>
+            <span id="strike2" class="game-text strikes pending-strike">x</span>
+            <span id="strike1" class="game-text strikes pending-strike">x</span>
+          </p>
+          <div id="target-color" class="colorable"></div>
+          <div id="color-selectors">
+            <div id="color-mixer" class="colorable">
+              <i id="right-icon" class="fas fa-check answer-icon game-text hidden-text"></i>
+              <i id="wrong-icon" class="fas fa-times answer-icon game-text hidden-text"></i>
+            </div>
+            <div id="swatch1" class="color-swatches colorable"></div>
+            <div id="swatch2" class="color-swatches colorable"></div>
+            <div id="swatch3" class="color-swatches colorable"></div>
+            <div id="swatch4" class="color-swatches colorable"></div>
+            <div id="swatch5" class="color-swatches colorable"></div>
+            <div id="swatch6" class="color-swatches colorable"></div>
+          </div>
         </div>
+        <section class="links-section">
+          <div class="links-bar">
+            <a class="link-icon" href="https://github.com/jkim421/Chroma" target=_none>
+              <i class="fab fa-github-square"></i>
+            </a>
+            <a class="link-icon" href="https://www.linkedin.com/in/john-j-kim-b0236536/" target=_none>
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a class="link-icon" href="https://www.google.com" target=_none>
+              <i class="fas fa-home"></i>
+            </a>
+          </div>
+        </section>
       </div>
-    </div>
-    <section class="links-section">
-      <div class="links-bar">
-        <a class="link-icon" href="https://github.com/jkim421/Chroma" target=_none>
-          <i class="fab fa-github-square"></i>
-        </a>
-        <a class="link-icon" href="https://www.linkedin.com/in/john-j-kim-b0236536/" target=_none>
-          <i class="fab fa-linkedin"></i>
-        </a>
-        <a class="link-icon" href="https://www.google.com" target=_none>
-          <i class="fas fa-home"></i>
-        </a>
-      </div>
-    </section>
+    </main>
   </body>
 </html>

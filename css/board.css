@@ -1,5 +1,12 @@
 body {
   background-color: #ddd;
+  display: flex;
+}
+
+.page-content {
+  display: flex;
+  margin: 0 auto;
+  /* justify-content: space-around; */
 }
 
 #game-container {
@@ -17,7 +24,7 @@ body {
   text-align: center;
   height: 800px;
   width: 500px;
-  margin: 0 auto;
+  margin: 0 20px;
   position: relative;
   background: linear-gradient(to bottom right, #000, #fff);
   background-size: 625% 1000%;
