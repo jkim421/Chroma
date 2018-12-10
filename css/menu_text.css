@@ -167,7 +167,7 @@
   100%{color: red}
 }
 
-@keyframes start4 {
+@keyframes start4{
   0%{color: yellow}
   16%{color: green}
   33%{color: blue}
