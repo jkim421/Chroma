@@ -1,9 +1,11 @@
 # Chroma
 ### Summary
-Chroma is a dynamically animated color blending puzzle game.
+Chroma is a dynamic color blending perception game.
+
+[Live Link](https://jkim421.github.io/Chroma)
 
 ### How It's Played
-In each round of Chroma, the player is presented with a target color and six color swatches. The goal of each round is to correctly select the colors swatches that will blend together to create the target color. If the player correcty guesses the blending set of swatches, they receive a point. With each incorrect blending the player receives a strike. If a player receives two strikes in a single round, they lose the game. They also lose the game when they receive three strikes total. As the player's score increases, the rounds will progressively become more difficult as the contrast between colors decreases and the number of swatches involved in the correct combination increases.
+In each round of Chroma, the player is presented with a target color and six randomly generated color swatches. The target color is an average of the RGB values of two of the color swatches. The goal of each round is to correctly guess the colors swatches that were averaged to create the target color. If the player correcty guesses the two solution swatches, they receive a point. With each incorrect guess the player receives a strike. The player loses the game when they receive three strikes total. As the player's score increases, the rounds will progressively become more difficult as the contrast between colors decreases and the number of swatches involved in the correct combination increases.
 
 ### MVPs
 1. Game board with interactive panels for color display, selection, and blending
