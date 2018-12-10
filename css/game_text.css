@@ -4,10 +4,10 @@
     visibility 1.5s,
     opacity 1.5s,
     color 1.5s,
-    font-size ease-in-out 2.0s,
     top ease-in-out 2.0s,
     right ease-in-out 2.0s,
-    left ease-in-out 2.0s;
+    left ease-in-out 2.0s,
+    font-size 2.0s;
   text-shadow:
     -1px -1px 0 #000,
     1px -1px 0 #000,
@@ -48,10 +48,18 @@
   right: 20px;
 }
 
+#score-display, #score-count:hover {
+  cursor: default;
+}
+
 #strikes {
   position: absolute;
   top: 30px;
   right: 20px;
+}
+
+#strikes, .strikes:hover {
+  cursor: default;
 }
 
 .pending-strike {

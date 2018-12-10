@@ -18,6 +18,10 @@
   left: 115px;
 }
 
+#title:hover {
+  cursor: default;
+}
+
 #start-btn {
   font-size: 30px;
   margin-top: 370px;

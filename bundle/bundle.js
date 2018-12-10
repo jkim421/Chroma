@@ -17337,6 +17337,7 @@ class Game {
     this.submission = [];
     this.swatches = [];
     this.startRender = this.startRender.bind(this);
+    this.scoreCount = 0;
     this.strikeCount = 0;
     this.guessing = false;
 
@@ -17346,7 +17347,6 @@ class Game {
     this.submit = document.getElementById("submit-btn");
 
     this.score = document.getElementById("score-display");
-    this.scoreCount = document.getElementById("score-count");
     this.strikes = document.getElementById("strikes");
 
     this.rightIcon = document.getElementById("right-icon");
@@ -17386,12 +17386,13 @@ class Game {
   }
 
   resetSelection() {
-    this.submission.forEach( swatch => swatch.ele.classList.remove("selected-swatch"));
     this.submission = [];
     this.swatches.forEach ( swatch => {
-      swatch.ele.classList.remove("solution-swatch");
-      swatch.ele.classList.remove("other-swatch");
-      swatch.ele.classList.remove("hidden-swatch");
+      swatch.ele.classList.remove(
+        "selected-swatch",
+        "solution-swatch",
+        "other-swatch",
+        "hidden-swatch");
     });
   }
 
@@ -17425,12 +17426,12 @@ class Game {
   }
 
   updateScore() {
-    let newScore = parseInt(this.scoreCount.innerHTML) + 1;
-    this.scoreCount.innerHTML = `${newScore}`;
+    this.scoreCount += 1
+    this.score.innerHTML = `score: ${this.scoreCount}`;
   }
 
   endGame() {
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["moveScore"])(this.score, this.scoreCount);
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["moveScore"])(this.score);
 
     this.wrongIcon.classList.add("hidden-text");
     this.rightIcon.classList.add("hidden-text");
@@ -17441,12 +17442,13 @@ class Game {
 
   restartGame() {
     if (this.strikeCount === 3) {
-      this.scoreCount.innerHTML = "0";
+      this.scoreCount = 0;
       this.strikeCount = 0;
+      this.score.innerHTML = `score: ${this.scoreCount}`;
       this.restart.innerHTML = "next round";
       Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["showText"])(this.strikes);
       Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["resetStrikes"])();
-      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["resetScore"])(this.score, this.scoreCount);
+      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["resetScore"])(this.score);
       this.restartGame();
     } else {
       if (this.guessing === false) {
@@ -17472,6 +17474,7 @@ class Game {
             this.swatches[i].solution = false;
           }
         }
+        console.log(this.swatches);
       }
     }
   }
@@ -17497,7 +17500,6 @@ class Game {
       }
       this.swatches.push(newSwatch);
     }
-
     return this.swatches;
   }
 }
@@ -17591,14 +17593,12 @@ const moveTitle = (title) => {
   title.setAttribute("style", "font-size: 20px; top: 20px; left: 20px");
 };
 
-const moveScore = (score, scoreCount) => {
+const moveScore = (score) => {
   score.setAttribute("style", "font-size: 50px; top: 285px; right: 115px;");
-  scoreCount.setAttribute("style", "font-size: 50px;");
 };
 
-const resetScore = (score, scoreCount) => {
+const resetScore = (score) => {
   score.setAttribute("style", "");
-  scoreCount.setAttribute("style", "");
 };
 
 const hideText = (ele) => {
@@ -17625,10 +17625,9 @@ const showMatch = (swatch) => {
 
 const resetStrikes = () => {
   const strikes = Array.from(document.getElementsByClassName("strikes"));
-  debugger
   strikes.forEach( strike => {
     strike.classList.remove("active-strike");
-  })
+  });
 };
 
 

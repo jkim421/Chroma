@@ -10,14 +10,12 @@ export const moveTitle = (title) => {
   title.setAttribute("style", "font-size: 20px; top: 20px; left: 20px");
 };
 
-export const moveScore = (score, scoreCount) => {
+export const moveScore = (score) => {
   score.setAttribute("style", "font-size: 50px; top: 285px; right: 115px;");
-  scoreCount.setAttribute("style", "font-size: 50px;");
 };
 
-export const resetScore = (score, scoreCount) => {
+export const resetScore = (score) => {
   score.setAttribute("style", "");
-  scoreCount.setAttribute("style", "");
 };
 
 export const hideText = (ele) => {
@@ -44,8 +42,7 @@ export const showMatch = (swatch) => {
 
 export const resetStrikes = () => {
   const strikes = Array.from(document.getElementsByClassName("strikes"));
-  debugger
   strikes.forEach( strike => {
     strike.classList.remove("active-strike");
-  })
+  });
 };
