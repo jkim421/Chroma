@@ -61,12 +61,13 @@ class Game {
     }
   }
 
-  addSelection(swatch, ele) {
-    const swatchEle = ele;
+  addSelection(swatch, swatchEle) {
     swatchEle.addEventListener("click", (e) => {
-      this.submission.push(swatch);
-      this.updateSelections(swatchEle);
-      e.target.classList.toggle("selected-swatch");
+      if (this.submission[1] !== swatch) {
+        this.submission.push(swatch);
+        this.updateSelections(swatchEle);
+        e.target.classList.toggle("selected-swatch");
+      }
     });
   }
 
