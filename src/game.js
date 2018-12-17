@@ -160,7 +160,6 @@ class Game {
             this.swatches[i].solution = false;
           }
         }
-        console.log(this.swatches);
       }
     }
   }
