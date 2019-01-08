@@ -82,6 +82,10 @@
   1px 1px 0 #000; */
 }
 
+#right-icon {
+  left: 72px;
+}
+
 .answer-icon:hover {
   cursor: default;
 }

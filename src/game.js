@@ -112,7 +112,7 @@ class Game {
   }
 
   updateScore() {
-    this.scoreCount += 1
+    this.scoreCount += 1;
     this.score.innerHTML = `score: ${this.scoreCount}`;
   }
 
