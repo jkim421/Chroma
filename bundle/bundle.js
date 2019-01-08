@@ -17427,7 +17427,7 @@ class Game {
   }
 
   updateScore() {
-    this.scoreCount += 1
+    this.scoreCount += 1;
     this.score.innerHTML = `score: ${this.scoreCount}`;
   }
 
@@ -17475,7 +17475,6 @@ class Game {
             this.swatches[i].solution = false;
           }
         }
-        console.log(this.swatches);
       }
     }
   }
