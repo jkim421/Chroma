@@ -20,6 +20,7 @@ class Game {
     this.swatchEles = swatchEles;
 
     this.submission = [];
+    this.submissionColors = [];
     this.swatches = [];
     this.startRender = this.startRender.bind(this);
     this.scoreCount = 0;
@@ -53,11 +54,25 @@ class Game {
     });
   }
 
+  updateMixer(e) {
+    debugger
+    if (this.submission.length === 2) {
+      if (this.mixer.style.backgroundColor === this.submissionColors[0]) {
+        debugger
+        this.mixer.style.backgroundColor = this.submissionColors[1];
+      } else {
+        debugger
+        this.mixer.style.backgroundColor = this.submissionColors[0];
+      }
+    }
+  }
+
   updateSelections(swatchEle) {
     if (this.submission.length > 2) {
       const oldSwatch = this.submission[0];
       oldSwatch.ele.classList.toggle("selected-swatch");
       this.submission = this.submission.slice(1);
+      this.submissionColors = this.submissionColors.slice(1);
     }
   }
 
@@ -65,6 +80,7 @@ class Game {
     swatchEle.addEventListener("click", (e) => {
       if (this.submission[1] !== swatch) {
         this.submission.push(swatch);
+        this.submissionColors.push(swatch.ele.style.backgroundColor);
         this.updateSelections(swatchEle);
         e.target.classList.toggle("selected-swatch");
       }

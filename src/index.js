@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const restart = document.getElementById("restart-btn");
   const submit = document.getElementById("submit-btn");
+  const mixer = document.getElementById("color-mixer");
 
   setMute();
 
@@ -27,8 +28,12 @@ document.addEventListener("DOMContentLoaded", () => {
   restart.addEventListener("click", () => {
     game.restartGame();
   });
-  
+
   submit.addEventListener("click", (e) => {
     game.handleClick(e, restart, submit);
+  });
+
+  mixer.addEventListener("click", () => {
+    game.updateMixer();
   });
 });
