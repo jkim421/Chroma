@@ -1,9 +1,9 @@
 .game-text {
   font-family: 'Bungee', cursive;
   transition:
-    visibility 1.5s,
-    opacity 1.5s,
-    color 1.5s,
+    visibility 0.75s,
+    opacity 0.75s,
+    color 0.75s,
     top ease-in-out 2.0s,
     right ease-in-out 2.0s,
     left ease-in-out 2.0s,
@@ -22,7 +22,7 @@
 }
 
 .short-trans {
-  transition: visibility 1.5s, opacity 1.5s, color 1.5s;
+  transition: visibility 0.75s, opacity 0.75s, color 0.75s;
 }
 
 .hidden-text {
@@ -39,8 +39,14 @@
 #restart-btn {
   position: absolute;
   top: 352px;
-  left: 20px;
+  right: 20px;
 }
+
+/* #restart-btn {
+  position: absolute;
+  top: 352px;
+  left: 20px;
+} */
 
 #score-display {
   position: absolute;

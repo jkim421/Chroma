@@ -83,18 +83,19 @@ class Game {
   }
 
   handleClick(e, restart, submit) {
+    debugger
     if (e.currentTarget.innerHTML === "submit guess") {
       this.processAnswer(restart, submit);
     } else {
-      this.processAnswer();
+      this.restartGame();
     }
   }
 
   processAnswer() {
     if (this.guessing === true && this.submission.length === 2) {
       this.guessing = false;
+      toggleText(this.restart);
       toggleText(this.submit);
-      setTimeout(() => toggleText(this.restart), 750);
       if (this.submission.length === 2) {
         this.swatches.forEach( swatch => {
           showMatch(swatch);
@@ -148,7 +149,7 @@ class Game {
       if (this.guessing === false) {
         this.guessing = true;
         toggleText(this.restart);
-        setTimeout(() => toggleText(this.submit), 750);
+        toggleText(this.submit);
 
         this.resetSelection();
         this.mixer.style.backgroundColor = "transparent";

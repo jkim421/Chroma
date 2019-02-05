@@ -17397,11 +17397,19 @@ class Game {
     });
   }
 
+  handleClick(e, restart, submit) {
+    if (e.currentTarget.innerHTML === "submit guess") {
+      this.processAnswer(restart, submit);
+    } else {
+      this.processAnswer();
+    }
+  }
+
   processAnswer() {
     if (this.guessing === true && this.submission.length === 2) {
       this.guessing = false;
-      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(this.restart);
       Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(this.submit);
+      setTimeout(() => Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(this.restart), 750);
       if (this.submission.length === 2) {
         this.swatches.forEach( swatch => {
           Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["showMatch"])(swatch);
@@ -17455,7 +17463,7 @@ class Game {
       if (this.guessing === false) {
         this.guessing = true;
         Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(this.restart);
-        Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(this.submit);
+        setTimeout(() => Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(this.submit), 750);
 
         this.resetSelection();
         this.mixer.style.backgroundColor = "transparent";
@@ -17553,9 +17561,9 @@ document.addEventListener("DOMContentLoaded", () => {
   restart.addEventListener("click", () => {
     game.restartGame();
   });
-
-  submit.addEventListener("click", () => {
-    game.processAnswer(restart, submit);
+  
+  submit.addEventListener("click", (e) => {
+    game.handleClick(e, restart, submit);
   });
 });
 

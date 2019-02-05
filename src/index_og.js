@@ -27,8 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
   restart.addEventListener("click", () => {
     game.restartGame();
   });
-  
-  submit.addEventListener("click", (e) => {
-    game.handleClick(e, restart, submit);
+
+  submit.addEventListener("click", () => {
+    game.processAnswer(restart, submit);
   });
 });
