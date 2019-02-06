@@ -18,6 +18,7 @@ class Game {
   constructor(target, swatchEles) {
     this.target = target;
     this.swatchEles = swatchEles;
+    this.solutionColors = [];
 
     this.submission = [];
     this.submissionColors = [];
@@ -54,14 +55,11 @@ class Game {
     });
   }
 
-  updateMixer(e) {
-    debugger
+  updateMixer() {
     if (this.submission.length === 2) {
       if (this.mixer.style.backgroundColor === this.submissionColors[0]) {
-        debugger
         this.mixer.style.backgroundColor = this.submissionColors[1];
       } else {
-        debugger
         this.mixer.style.backgroundColor = this.submissionColors[0];
       }
     }
@@ -89,6 +87,8 @@ class Game {
 
   resetSelection() {
     this.submission = [];
+    this.submissionColors = [];
+    this.solutionColors = [];
     this.swatches.forEach ( swatch => {
       swatch.ele.classList.remove(
         "selected-swatch",
@@ -111,6 +111,10 @@ class Game {
       this.guessing = false;
       toggleText(this.submit);
       setTimeout(() => toggleText(this.restart), 750);
+
+      this.mixer.style.backgroundColor = this.target.ele.style.backgroundColor;
+      this.submissionColors = this.solutionColors;
+
       if (this.submission.length === 2) {
         this.swatches.forEach( swatch => {
           showMatch(swatch);
@@ -155,7 +159,6 @@ class Game {
       this.scoreCount = 0;
       this.strikeCount = 0;
       this.score.innerHTML = `score: ${this.scoreCount}`;
-      this.restart.innerHTML = "next round";
       showText(this.strikes);
       resetStrikes();
       resetScore(this.score);
@@ -164,10 +167,14 @@ class Game {
       if (this.guessing === false) {
         this.guessing = true;
         toggleText(this.restart);
+        setTimeout(() => {
+          if (this.restart.innerHTML === "new game") {
+            this.restart.innerHTML = "next round";
+          }
+        }, 750);
         setTimeout(() => toggleText(this.submit), 750);
 
         this.resetSelection();
-        this.mixer.style.backgroundColor = "transparent";
 
         this.wrongIcon.classList.add("hidden-text");
         this.rightIcon.classList.add("hidden-text");
@@ -178,8 +185,10 @@ class Game {
 
         for (let i=0; i < this.swatches.length; i++) {
           this.swatches[i].setColor(newColors[i]);
+          let color = this.swatches[i].ele.style.backgroundColor;
           if (newColors[i][3]) {
             this.swatches[i].solution = true;
+            this.solutionColors.push(color);
           } else {
             this.swatches[i].solution = false;
           }
