@@ -11,7 +11,7 @@ export const moveTitle = (title) => {
 };
 
 export const moveScore = (score) => {
-  score.setAttribute("style", "font-size: 50px; top: 285px; right: 115px;");
+  score.setAttribute("style", "font-size: 50px; top: 285px; right: 160px;");
 };
 
 export const resetScore = (score) => {

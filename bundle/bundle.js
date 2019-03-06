@@ -17466,6 +17466,7 @@ class Game {
     this.rightIcon.classList.add("hidden-text");
 
     Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["hideText"])(this.strikes);
+    
     this.restart.innerHTML = "new game";
   }
 
@@ -17632,7 +17633,7 @@ const moveTitle = (title) => {
 };
 
 const moveScore = (score) => {
-  score.setAttribute("style", "font-size: 50px; top: 285px; right: 115px;");
+  score.setAttribute("style", "font-size: 50px; top: 285px; right: 160px;");
 };
 
 const resetScore = (score) => {

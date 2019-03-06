@@ -151,6 +151,7 @@ class Game {
     this.rightIcon.classList.add("hidden-text");
 
     hideText(this.strikes);
+    
     this.restart.innerHTML = "new game";
   }
 

@@ -34,13 +34,13 @@
 
 #submit-btn {
   position: absolute;
-  top: 352px;
+  top: 350px;
   right: 20px;
 }
 
 #restart-btn {
   position: absolute;
-  top: 352px;
+  top: 350px;
   right: 20px;
 }
 
@@ -52,7 +52,7 @@
 
 #score-display {
   position: absolute;
-  top: 10px;
+  top: 0;
   right: 20px;
 }
 
@@ -62,7 +62,7 @@
 
 #strikes {
   position: absolute;
-  top: 30px;
+  top: 16px;
   right: 20px;
 }
 
