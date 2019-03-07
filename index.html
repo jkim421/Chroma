@@ -17,28 +17,43 @@
 
     <script type="application/javascript" src="./bundle/bundle.js"></script>
   </head>
-  <body>
+  <body id="page-body">
     <audio id="music-player" muted loop>
       <source src="https://s3.amazonaws.com/chroma-prod/chris_zabriskie_a_new_day_in_a_new_sector.mp3" type="audio/mp3">
     </audio>
     <main class="page-content">
-      <div class="rules">
-        <p class="how-to">How to Play</p>
-        <ul>
-          <li>
-            The color on top is the target color
-          </li></br>
-          <li>
-            Select the two colors that average to create the target color
-          </li></br>
-          <li>
-            The mixer will transition between the two most recently selected colors
-          </li></br>
-          <li>
-            Use the mixer! The target color will briefly appear in the mixer when you select the correct pair
-          </li>
-        </ul>
-      </div>
+      <section class="links-section">
+        <div class="links-bar">
+          <a class="link-icon" href="https://github.com/jkim421/Chroma" target=_none>
+            <i class="fab fa-github-square"></i>
+          </a>
+          <a class="link-icon" href="https://www.linkedin.com/in/john-j-kim-b0236536/" target=_none>
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a class="link-icon" href="https://jkim421.github.io/" target=_none>
+            <i class="fas fa-home"></i>
+          </a>
+        </div>
+      </section>
+      <!-- <section class="page-info">
+        <div class="rules">
+          <p class="how-to">How to Play</p>
+          <ul>
+            <li>
+              The color on top is the target color
+            </li></br>
+            <li>
+              Select the two colors that average to create the target color
+            </li></br>
+            <li>
+              The mixer will transition between the two most recently selected colors
+            </li></br>
+            <li>
+              Use the mixer! The target color will briefly appear in the mixer when you select the correct pair
+            </li>
+          </ul>
+        </div>
+      </section> -->
       <div id="game-container">
         <div id="game-board">
           <div id="music-btn">
@@ -53,6 +68,7 @@
             <span id="title5" class="menu-text">M</span>
             <span id="title6" class="menu-text">A</span>
           </h1>
+          <div class="menu-spacer"></div>
           <p id="start-btn" class="menu-text">
             <span id="start1" class="menu-text">S</span>
             <span id="start2" class="menu-text">T</span>
@@ -60,6 +76,9 @@
             <span id="start4" class="menu-text">R</span>
             <span id="start5" class="menu-text">T</span>
           </p>
+          <div id="menu-help" class="menu-text help-text">
+            Select the two colors that blend to the target color on top
+          </div>
           <p id="submit-btn" class="game-text hidden-text">submit guess</p>
           <p id="restart-btn" class="game-text short-trans hidden-text">next round</p>
           <p id="score-display" class="game-text hidden-text">score: 0</p>
@@ -84,19 +103,6 @@
             <div id="swatch6" class="color-swatches colorable"></div>
           </div>
         </div>
-        <section class="links-section">
-          <div class="links-bar">
-            <a class="link-icon" href="https://github.com/jkim421/Chroma" target=_none>
-              <i class="fab fa-github-square"></i>
-            </a>
-            <a class="link-icon" href="https://www.linkedin.com/in/john-j-kim-b0236536/" target=_none>
-              <i class="fab fa-linkedin"></i>
-            </a>
-            <a class="link-icon" href="https://jkim421.github.io/" target=_none>
-              <i class="fas fa-home"></i>
-            </a>
-          </div>
-        </section>
       </div>
     </main>
   </body>

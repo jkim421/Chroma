@@ -49,18 +49,19 @@ class Game {
     this.wrongIcon = document.getElementById("wrong-icon");
   }
 
-  startRender(title, startBtn) {
+  startRender(title, help, startBtn) {
     this.guessing = true;
     moveTitle(title);
     hideText(startBtn);
+    hideText(help);
     setTimeout(() => {
-      this.renderBoard(this.target, this.swatchEles);}, 1750);
+      this.renderBoard(this.target, this.swatchEles);}, 1500);
   }
 
-  startGame(title, startBtn, startRender) {
+  startGame(title, startBtn, help, startRender) {
     startBtn.addEventListener("click", function handler(e) {
       e.currentTarget.removeEventListener("click", handler);
-      startRender(title, startBtn, this.target, this.swatches);
+      startRender(title, startBtn, help, this.target, this.swatches);
     });
   }
 
@@ -249,8 +250,6 @@ class Game {
     this.wrongIcon.classList.add("hidden-text");
     this.rightIcon.classList.add("hidden-text");
 
-    hideText(this.strikes);
-
     this.restart.innerHTML = "new game";
   }
 
@@ -260,7 +259,6 @@ class Game {
       this.scoreCount = 0;
       this.strikeCount = 0;
       this.score.innerHTML = `score: ${this.scoreCount}`;
-      showText(this.strikes);
       resetStrikes();
       resetScore(this.score);
       this.resetMixer("game");

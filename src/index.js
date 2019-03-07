@@ -8,6 +8,7 @@ import { setMute } from './music.js';
 document.addEventListener("DOMContentLoaded", () => {
   const title = document.getElementById("title");
   const startBtn = document.getElementById("start-btn");
+  const help = document.getElementById("menu-help");
 
   const restart = document.getElementById("restart-btn");
   const submit = document.getElementById("submit-btn");
@@ -23,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   game.startGame(
     title,
     startBtn,
+    help,
     game.startRender);
 
   restart.addEventListener("click", () => {

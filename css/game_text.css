@@ -16,8 +16,16 @@
     1px 1px 0 #000;
   color: #eee;
   z-index: 2;
-  font-size: 16px;
+  font-size: 24px;
   user-select: none;
+}
+
+#score-display {
+  font-size: 24px;
+}
+
+#submit-btn, #restart-btn {
+  font-size: 18px;
 }
 
 .game-text:hover {
@@ -36,13 +44,13 @@
 #submit-btn {
   position: absolute;
   top: 350px;
-  right: 20px;
+  right: -50px;
 }
 
 #restart-btn {
   position: absolute;
   top: 350px;
-  right: 20px;
+  right: -50px;
 }
 
 /* #restart-btn {
@@ -53,8 +61,8 @@
 
 #score-display {
   position: absolute;
-  top: 0;
-  right: 20px;
+  top: 100px;
+  right: -50px;
 }
 
 #score-display, #score-count:hover {
@@ -63,8 +71,8 @@
 
 #strikes {
   position: absolute;
-  top: 16px;
-  right: 20px;
+  top: 124px;
+  right: -50px;
 }
 
 #strikes, .strikes:hover {
@@ -72,7 +80,7 @@
 }
 
 .strikes {
-  font-size: 20px;
+  font-size: 30px;
   font-weight: 600;
 }
 
@@ -116,8 +124,8 @@
   position: absolute;
   height: 30px;
   width: 30px;
-  bottom: 15px;
-  right: 35px;
+  bottom: 0px;
+  right: 0px;
 }
 
 .music-icon {

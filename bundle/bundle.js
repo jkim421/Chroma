@@ -17393,18 +17393,19 @@ class Game {
     this.wrongIcon = document.getElementById("wrong-icon");
   }
 
-  startRender(title, startBtn) {
+  startRender(title, help, startBtn) {
     this.guessing = true;
     Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["moveTitle"])(title);
     Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["hideText"])(startBtn);
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["hideText"])(help);
     setTimeout(() => {
-      this.renderBoard(this.target, this.swatchEles);}, 1750);
+      this.renderBoard(this.target, this.swatchEles);}, 1500);
   }
 
-  startGame(title, startBtn, startRender) {
+  startGame(title, startBtn, help, startRender) {
     startBtn.addEventListener("click", function handler(e) {
       e.currentTarget.removeEventListener("click", handler);
-      startRender(title, startBtn, this.target, this.swatches);
+      startRender(title, startBtn, help, this.target, this.swatches);
     });
   }
 
@@ -17593,8 +17594,6 @@ class Game {
     this.wrongIcon.classList.add("hidden-text");
     this.rightIcon.classList.add("hidden-text");
 
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["hideText"])(this.strikes);
-
     this.restart.innerHTML = "new game";
   }
 
@@ -17604,7 +17603,6 @@ class Game {
       this.scoreCount = 0;
       this.strikeCount = 0;
       this.score.innerHTML = `score: ${this.scoreCount}`;
-      Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["showText"])(this.strikes);
       Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["resetStrikes"])();
       Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["resetScore"])(this.score);
       this.resetMixer("game");
@@ -17705,6 +17703,7 @@ __webpack_require__.r(__webpack_exports__);
 document.addEventListener("DOMContentLoaded", () => {
   const title = document.getElementById("title");
   const startBtn = document.getElementById("start-btn");
+  const help = document.getElementById("menu-help");
 
   const restart = document.getElementById("restart-btn");
   const submit = document.getElementById("submit-btn");
@@ -17720,6 +17719,7 @@ document.addEventListener("DOMContentLoaded", () => {
   game.startGame(
     title,
     startBtn,
+    help,
     game.startRender);
 
   restart.addEventListener("click", () => {
@@ -17762,7 +17762,8 @@ const removeBorder = (ele) => {
 };
 
 const moveTitle = (title) => {
-  title.setAttribute("style", "font-size: 20px; top: 20px; left: 20px");
+  // title.setAttribute("style", "font-size: 20px; top: 20px; left: 20px");
+  title.setAttribute("style", "font-size: 26px; top: 20px; left: 170px");
 };
 
 const moveScore = (score) => {

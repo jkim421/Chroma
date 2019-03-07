@@ -7,7 +7,8 @@ export const removeBorder = (ele) => {
 };
 
 export const moveTitle = (title) => {
-  title.setAttribute("style", "font-size: 20px; top: 20px; left: 20px");
+  // title.setAttribute("style", "font-size: 20px; top: 20px; left: 20px");
+  title.setAttribute("style", "font-size: 26px; top: 20px; left: 170px");
 };
 
 export const moveScore = (score) => {
