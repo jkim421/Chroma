@@ -17309,6 +17309,37 @@ const getHardColors = () => {
 
 /***/ }),
 
+/***/ "./src/default_objects.js":
+/*!********************************!*\
+  !*** ./src/default_objects.js ***!
+  \********************************/
+/*! exports provided: defaultSubmission, defaultSubmissionColors, defaultSwatches */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultSubmission", function() { return defaultSubmission; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultSubmissionColors", function() { return defaultSubmissionColors; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultSwatches", function() { return defaultSwatches; });
+const defaultSubmission = [];
+
+const defaultSubmissionColors = {
+  left: null,
+  right: null,
+};
+
+const defaultSwatches = {
+  0: null,
+  1: null,
+  2: null,
+  3: null,
+  4: null,
+  5: null,
+};
+
+
+/***/ }),
+
 /***/ "./src/game.js":
 /*!*********************!*\
   !*** ./src/game.js ***!
@@ -17319,10 +17350,12 @@ const getHardColors = () => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _swatch_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./swatch.js */ "./src/swatch.js");
-/* harmony import */ var _colors_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./colors.js */ "./src/colors.js");
-/* harmony import */ var _layout_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./layout.js */ "./src/layout.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _default_objects__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./default_objects */ "./src/default_objects.js");
+/* harmony import */ var _colors_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./colors.js */ "./src/colors.js");
+/* harmony import */ var _layout_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./layout.js */ "./src/layout.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_4__);
+
 
 
 
@@ -17335,15 +17368,23 @@ class Game {
     this.swatchEles = swatchEles;
     this.solutionColors = [];
 
+    // this.submission = [];
+    // this.submissionColors = [];
     this.submission = [];
-    this.submissionColors = [];
-    this.swatches = [];
+    this.submissionColors = _.merge(_default_objects__WEBPACK_IMPORTED_MODULE_1__["defaultSubmissionColors"]);
+    this.swatches = _.merge(_default_objects__WEBPACK_IMPORTED_MODULE_1__["defaultSwatches"]);
+    this.currentMixer = {
+      mixer1: true,
+      mixer2: false,
+    };
     this.startRender = this.startRender.bind(this);
     this.scoreCount = 0;
     this.strikeCount = 0;
     this.guessing = false;
 
     this.mixer = document.getElementById("color-mixer");
+    this.mixer1 = document.getElementById("mixer1");
+    this.mixer2 = document.getElementById("mixer2");
 
     this.restart = document.getElementById("restart-btn");
     this.submit = document.getElementById("submit-btn");
@@ -17357,8 +17398,8 @@ class Game {
 
   startRender(title, startBtn) {
     this.guessing = true;
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["moveTitle"])(title);
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["hideText"])(startBtn);
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["moveTitle"])(title);
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["hideText"])(startBtn);
     setTimeout(() => {
       this.renderBoard(this.target, this.swatchEles);}, 1500);
   }
@@ -17370,31 +17411,60 @@ class Game {
     });
   }
 
-  updateMixer() {
-    if (this.submission.length === 2) {
-      if (this.mixer.style.backgroundColor === this.submissionColors[0]) {
-        this.mixer.style.backgroundColor = this.submissionColors[1];
+  updateMixer(swatchEle) {
+    let colors = [];
+
+    const newColor = swatchEle.style.backgroundColor;
+    const sides = Object.keys(this.submissionColors);
+
+    if (this.submission.length === 1) {
+      this.mixer.style.backgroundColor = newColor;
+      this.submissionColors["left"] = newColor;
+    } else {
+      if (this.submissionColors["right"] === null) {
+        this.submissionColors["right"] = newColor;
+        this.setMixerColor();
       } else {
-        this.mixer.style.backgroundColor = this.submissionColors[0];
+        colors.push(this.submission[0].ele.style.backgroundColor);
+        colors.push(this.submission[1].ele.style.backgroundColor);
+        const newSide = sides.filter( side => {
+          return !colors.includes(this.submissionColors[side]);
+        })[0];
+        this.submissionColors[newSide] = newColor;
+        this.setMixerColor();
       }
     }
   }
 
-  updateSelections(swatchEle) {
-    if (this.submission.length > 2) {
+  setMixerColor() {
+    const left = this.submissionColors["left"];
+    const right = this.submissionColors["right"];
+    const newBackground = `background: linear-gradient(to right, ${left} 45%, ${right} 55% 100%)`;
+    this.mixer.setAttribute("style", newBackground);
+  }
+
+  updateSubmission(swatchEle) {
+    const submission = Object.values(this.submission);
+    if (submission.length > 2) {
       const oldSwatch = this.submission[0];
       oldSwatch.ele.classList.toggle("selected-swatch");
       this.submission = this.submission.slice(1);
-      this.submissionColors = this.submissionColors.slice(1);
+      // this.submissionColors = this.submissionColors.slice(1);
+      // this.updateMixer(swatchEle);
     }
+    // const submission = Object.values(this.submission);
+    // if (submission.length === 0) {
+    //   this.submission["first"] = swatch;
+    // }
   }
 
   addSelection(swatch, swatchEle) {
     swatchEle.addEventListener("click", (e) => {
       if (this.submission[1] !== swatch) {
         this.submission.push(swatch);
-        this.submissionColors.push(swatch.ele.style.backgroundColor);
-        this.updateSelections(swatchEle);
+        // this.submissionColors.push(swatch.ele.style.backgroundColor);
+        this.updateSubmission(swatchEle);
+        this.updateMixer(swatchEle);
         e.target.classList.toggle("selected-swatch");
       }
     });
@@ -17402,7 +17472,11 @@ class Game {
 
   resetSelection() {
     this.submission = [];
-    this.submissionColors = [];
+    // this.submissionColors = [];
+    this.submissionColors = {
+      left: null,
+      right: null,
+    };
     this.solutionColors = [];
     this.swatches.forEach ( swatch => {
       swatch.ele.classList.remove(
@@ -17424,15 +17498,15 @@ class Game {
   processAnswer() {
     if (this.guessing === true && this.submission.length === 2) {
       this.guessing = false;
-      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(this.submit);
-      setTimeout(() => Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(this.restart), 750);
-
-      this.mixer.style.backgroundColor = this.target.ele.style.backgroundColor;
+      Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["toggleText"])(this.submit);
+      setTimeout(() => Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["toggleText"])(this.restart), 750);
+      // this.mixer.style.backgroundColor = this.target.ele.style.backgroundColor;
+      // this.updateMixer();
       this.submissionColors = this.solutionColors;
 
       if (this.submission.length === 2) {
         this.swatches.forEach( swatch => {
-          Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["showMatch"])(swatch);
+          Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["showMatch"])(swatch);
         });
         if (this.submission.some( swatch => swatch.solution === false )) {
           this.wrongIcon.classList.remove("hidden-text");
@@ -17460,13 +17534,13 @@ class Game {
   }
 
   endGame() {
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["moveScore"])(this.score);
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["moveScore"])(this.score);
 
     this.wrongIcon.classList.add("hidden-text");
     this.rightIcon.classList.add("hidden-text");
 
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["hideText"])(this.strikes);
-    
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["hideText"])(this.strikes);
+
     this.restart.innerHTML = "new game";
   }
 
@@ -17475,27 +17549,27 @@ class Game {
       this.scoreCount = 0;
       this.strikeCount = 0;
       this.score.innerHTML = `score: ${this.scoreCount}`;
-      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["showText"])(this.strikes);
-      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["resetStrikes"])();
-      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["resetScore"])(this.score);
+      Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["showText"])(this.strikes);
+      Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["resetStrikes"])();
+      Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["resetScore"])(this.score);
       this.restartGame();
     } else {
       if (this.guessing === false) {
         this.guessing = true;
-        Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(this.restart);
+        Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["toggleText"])(this.restart);
         setTimeout(() => {
           if (this.restart.innerHTML === "new game") {
             this.restart.innerHTML = "next round";
           }
         }, 750);
-        setTimeout(() => Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["toggleText"])(this.submit), 750);
+        setTimeout(() => Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["toggleText"])(this.submit), 750);
 
         this.resetSelection();
 
         this.wrongIcon.classList.add("hidden-text");
         this.rightIcon.classList.add("hidden-text");
 
-        let newColors = Object(_colors_js__WEBPACK_IMPORTED_MODULE_1__["getEasyColors"])();
+        let newColors = Object(_colors_js__WEBPACK_IMPORTED_MODULE_2__["getEasyColors"])();
         let newTargetColor = this.target.setEasyColor(newColors[0], newColors[1]);
         newColors = _.shuffle(newColors);
 
@@ -17514,25 +17588,25 @@ class Game {
   }
 
   renderBoard(target, swatches) {
-    let allColors = Object(_colors_js__WEBPACK_IMPORTED_MODULE_1__["getEasyColors"])();
+    let allColors = Object(_colors_js__WEBPACK_IMPORTED_MODULE_2__["getEasyColors"])();
     let targetColor = target.setEasyColor(allColors[0], allColors[1]);
 
     allColors = _.shuffle(allColors);
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["setBorder"])(target.ele);
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["setBorder"])(this.mixer);
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["showText"])(this.submit);
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["showText"])(this.score);
-    Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["showText"])(this.strikes);
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["setBorder"])(target.ele);
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["setBorder"])(this.mixer);
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["showText"])(this.submit);
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["showText"])(this.score);
+    Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["showText"])(this.strikes);
 
     for (let i=0; i < swatches.length; i++) {
-      let newSwatch = new _swatch_js__WEBPACK_IMPORTED_MODULE_0__["default"](swatches[i].id);
+      let newSwatch = new _swatch_js__WEBPACK_IMPORTED_MODULE_0__["default"](swatches[i].id, i);
       newSwatch.setColor(allColors[i]);
-      Object(_layout_js__WEBPACK_IMPORTED_MODULE_2__["setBorder"])(newSwatch.ele);
+      Object(_layout_js__WEBPACK_IMPORTED_MODULE_3__["setBorder"])(newSwatch.ele);
       this.addSelection(newSwatch, newSwatch.ele);
       if (allColors[i][3]) {
         newSwatch.solution = true;
       }
-      this.swatches.push(newSwatch);
+      this.swatches[newSwatch.key] = newSwatch;
     }
     return this.swatches;
   }
@@ -17591,10 +17665,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   submit.addEventListener("click", (e) => {
     game.handleClick(e, restart, submit);
-  });
-
-  mixer.addEventListener("click", () => {
-    game.updateMixer();
   });
 });
 
@@ -17718,10 +17788,11 @@ const setMute = () => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 class Swatch {
-  constructor(swatchId, rgb) {
+  constructor(swatchId, key) {
     this.solution = false;
     this.ele = document.getElementById(swatchId);
-    this.clickAction();
+    this.key = key;
+    // this.clickAction();
   }
 
   setColor(colorArr) {

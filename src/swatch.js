@@ -1,8 +1,9 @@
 class Swatch {
-  constructor(swatchId, rgb) {
+  constructor(swatchId, key) {
     this.solution = false;
     this.ele = document.getElementById(swatchId);
-    this.clickAction();
+    this.key = key;
+    // this.clickAction();
   }
 
   setColor(colorArr) {

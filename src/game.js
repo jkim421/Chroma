@@ -1,5 +1,9 @@
 import Target from './swatch.js';
 import Swatch from './swatch.js';
+import {
+  defaultSubmission,
+  defaultSubmissionColors,
+  defaultSwatches } from './default_objects';
 import { getEasyColors, getHardColors } from './colors.js';
 import {
   setBorder,
@@ -12,7 +16,7 @@ import {
   resetScore,
   resetStrikes,
   showMatch } from './layout.js';
-import { shuffle, sample } from 'lodash';
+import { shuffle, sample, merge } from 'lodash';
 
 class Game {
   constructor(target, swatchEles) {
@@ -20,15 +24,23 @@ class Game {
     this.swatchEles = swatchEles;
     this.solutionColors = [];
 
+    // this.submission = [];
+    // this.submissionColors = [];
     this.submission = [];
-    this.submissionColors = [];
-    this.swatches = [];
+    this.submissionColors = _.merge(defaultSubmissionColors);
+    this.swatches = _.merge(defaultSwatches);
+    this.currentMixer = {
+      mixer1: true,
+      mixer2: false,
+    };
     this.startRender = this.startRender.bind(this);
     this.scoreCount = 0;
     this.strikeCount = 0;
     this.guessing = false;
 
     this.mixer = document.getElementById("color-mixer");
+    this.mixer1 = document.getElementById("mixer1");
+    this.mixer2 = document.getElementById("mixer2");
 
     this.restart = document.getElementById("restart-btn");
     this.submit = document.getElementById("submit-btn");
@@ -55,31 +67,60 @@ class Game {
     });
   }
 
-  updateMixer() {
-    if (this.submission.length === 2) {
-      if (this.mixer.style.backgroundColor === this.submissionColors[0]) {
-        this.mixer.style.backgroundColor = this.submissionColors[1];
+  updateMixer(swatchEle) {
+    let colors = [];
+
+    const newColor = swatchEle.style.backgroundColor;
+    const sides = Object.keys(this.submissionColors);
+
+    if (this.submission.length === 1) {
+      this.mixer.style.backgroundColor = newColor;
+      this.submissionColors["left"] = newColor;
+    } else {
+      if (this.submissionColors["right"] === null) {
+        this.submissionColors["right"] = newColor;
+        this.setMixerColor();
       } else {
-        this.mixer.style.backgroundColor = this.submissionColors[0];
+        colors.push(this.submission[0].ele.style.backgroundColor);
+        colors.push(this.submission[1].ele.style.backgroundColor);
+        const newSide = sides.filter( side => {
+          return !colors.includes(this.submissionColors[side]);
+        })[0];
+        this.submissionColors[newSide] = newColor;
+        this.setMixerColor();
       }
     }
   }
 
-  updateSelections(swatchEle) {
-    if (this.submission.length > 2) {
+  setMixerColor() {
+    const left = this.submissionColors["left"];
+    const right = this.submissionColors["right"];
+    const newBackground = `background: linear-gradient(to right, ${left} 45%, ${right} 55% 100%)`;
+    this.mixer.setAttribute("style", newBackground);
+  }
+
+  updateSubmission(swatchEle) {
+    const submission = Object.values(this.submission);
+    if (submission.length > 2) {
       const oldSwatch = this.submission[0];
       oldSwatch.ele.classList.toggle("selected-swatch");
       this.submission = this.submission.slice(1);
-      this.submissionColors = this.submissionColors.slice(1);
+      // this.submissionColors = this.submissionColors.slice(1);
+      // this.updateMixer(swatchEle);
     }
+    // const submission = Object.values(this.submission);
+    // if (submission.length === 0) {
+    //   this.submission["first"] = swatch;
+    // }
   }
 
   addSelection(swatch, swatchEle) {
     swatchEle.addEventListener("click", (e) => {
       if (this.submission[1] !== swatch) {
         this.submission.push(swatch);
-        this.submissionColors.push(swatch.ele.style.backgroundColor);
-        this.updateSelections(swatchEle);
+        // this.submissionColors.push(swatch.ele.style.backgroundColor);
+        this.updateSubmission(swatchEle);
+        this.updateMixer(swatchEle);
         e.target.classList.toggle("selected-swatch");
       }
     });
@@ -87,7 +128,11 @@ class Game {
 
   resetSelection() {
     this.submission = [];
-    this.submissionColors = [];
+    // this.submissionColors = [];
+    this.submissionColors = {
+      left: null,
+      right: null,
+    };
     this.solutionColors = [];
     this.swatches.forEach ( swatch => {
       swatch.ele.classList.remove(
@@ -111,8 +156,8 @@ class Game {
       this.guessing = false;
       toggleText(this.submit);
       setTimeout(() => toggleText(this.restart), 750);
-
-      this.mixer.style.backgroundColor = this.target.ele.style.backgroundColor;
+      // this.mixer.style.backgroundColor = this.target.ele.style.backgroundColor;
+      // this.updateMixer();
       this.submissionColors = this.solutionColors;
 
       if (this.submission.length === 2) {
@@ -151,7 +196,7 @@ class Game {
     this.rightIcon.classList.add("hidden-text");
 
     hideText(this.strikes);
-    
+
     this.restart.innerHTML = "new game";
   }
 
@@ -210,14 +255,14 @@ class Game {
     showText(this.strikes);
 
     for (let i=0; i < swatches.length; i++) {
-      let newSwatch = new Swatch(swatches[i].id);
+      let newSwatch = new Swatch(swatches[i].id, i);
       newSwatch.setColor(allColors[i]);
       setBorder(newSwatch.ele);
       this.addSelection(newSwatch, newSwatch.ele);
       if (allColors[i][3]) {
         newSwatch.solution = true;
       }
-      this.swatches.push(newSwatch);
+      this.swatches[newSwatch.key] = newSwatch;
     }
     return this.swatches;
   }

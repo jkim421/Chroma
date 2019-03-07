@@ -32,8 +32,4 @@ document.addEventListener("DOMContentLoaded", () => {
   submit.addEventListener("click", (e) => {
     game.handleClick(e, restart, submit);
   });
-
-  mixer.addEventListener("click", () => {
-    game.updateMixer();
-  });
 });

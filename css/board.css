@@ -65,8 +65,22 @@ body {
   left: 100px;
 }
 
+#mixer1 {
+}
+
+#mixer2 {
+}
+
+.mixers {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  background: none;
+  position: absolute;
+}
+
 .colorable {
-  transition: background-color 1.5s, border 1s, visibility 1s, opacity 1s;
+  transition: background-color 1.5s, opacity 1.5s, border 1s, visibility 1s, opacity 1s;
   border: 1px solid transparent;
 }
 
