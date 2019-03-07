@@ -83,7 +83,6 @@ class Game {
   }
 
   handleClick(e, restart, submit) {
-    debugger
     if (e.currentTarget.innerHTML === "submit guess") {
       this.processAnswer(restart, submit);
     } else {

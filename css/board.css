@@ -65,10 +65,19 @@ body {
   left: 100px;
 }
 
+.colorable {
+  transition: background-color 1.5s, border 1s, visibility 1s, opacity 1s;
+  border: 1px solid transparent;
+}
+
 #mixer1 {
+  opacity: 0;
+  /* visibility: hidden; */
 }
 
 #mixer2 {
+  opacity: 0;
+  /* visibility: hidden; */
 }
 
 .mixers {
@@ -77,11 +86,7 @@ body {
   border-radius: 50%;
   background: none;
   position: absolute;
-}
-
-.colorable {
-  transition: background-color 1.5s, opacity 1.5s, border 1s, visibility 1s, opacity 1s;
-  border: 1px solid transparent;
+  transition: visibility 1s, opacity 1s;
 }
 
 .visible-colorable {
@@ -104,7 +109,7 @@ body {
 }
 
 .solution-swatch {
-  border-color: green;
+  border-color: white;
 }
 
 .other-swatch {

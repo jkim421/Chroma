@@ -30,6 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   submit.addEventListener("click", (e) => {
-    game.handleClick(e, restart, submit);
+    game.processAnswer();
   });
 });

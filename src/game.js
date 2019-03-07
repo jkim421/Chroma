@@ -24,23 +24,20 @@ class Game {
     this.swatchEles = swatchEles;
     this.solutionColors = [];
 
-    // this.submission = [];
-    // this.submissionColors = [];
     this.submission = [];
     this.submissionColors = _.merge(defaultSubmissionColors);
-    this.swatches = _.merge(defaultSwatches);
-    this.currentMixer = {
-      mixer1: true,
-      mixer2: false,
-    };
+    this.swatches = [];
     this.startRender = this.startRender.bind(this);
     this.scoreCount = 0;
     this.strikeCount = 0;
     this.guessing = false;
+    this.active = true;
 
     this.mixer = document.getElementById("color-mixer");
     this.mixer1 = document.getElementById("mixer1");
     this.mixer2 = document.getElementById("mixer2");
+    this.currentMixer = this.mixer1;
+    this.prevMixer = this.mixer2;
 
     this.restart = document.getElementById("restart-btn");
     this.submit = document.getElementById("submit-btn");
@@ -57,7 +54,7 @@ class Game {
     moveTitle(title);
     hideText(startBtn);
     setTimeout(() => {
-      this.renderBoard(this.target, this.swatchEles);}, 1500);
+      this.renderBoard(this.target, this.swatchEles);}, 1750);
   }
 
   startGame(title, startBtn, startRender) {
@@ -67,15 +64,97 @@ class Game {
     });
   }
 
+  setInitialMixer(color) {
+    this.currentMixer.style.background = color;
+    this.currentMixer.style.opacity = "1";
+    // this.flipMixer();
+    this.submissionColors["left"] = color;
+  }
+
+  assignMixer() {
+    if (this.currentMixer === this.mixer1) {
+      this.currentMixer = this.mixer2;
+      this.prevMixer = this.mixer1;
+    } else {
+      this.currentMixer = this.mixer1;
+      this.prevMixer = this.mixer2;
+    }
+  }
+
+  flipMixer() {
+    // this.currentMixer.style.visibility = "visible";
+    this.currentMixer.style.opacity = "1";
+    // this.prevMixer.style.visibility = "hidden";
+    this.prevMixer.style.opacity = "0";
+  }
+
+  resetMixer(type) {
+    // this.currentMixer.style.visibility = "hidden";
+    this.currentMixer.style.opacity = "0";
+    // this.prevMixer.style.visibility = "hidden";
+    this.prevMixer.style.opacity = "0";
+    if (type === "game") {
+      setTimeout( () => {
+        this.currentMixer.style.background = "none";
+        this.prevMixer.style.background = "none";
+        this.currentMixer = this.mixer1;
+        this.active = true;
+      }, 1000);
+    } else {
+      this.currentMixer.style.opacity = "0";
+      this.prevMixer.style.opacity = "0";
+      setTimeout( () => {
+        this.currentMixer.style.background = "none";
+        this.prevMixer.style.background = "none";
+        this.active = true;
+      }, 1000);
+    }
+  }
+
+  setMixerColor() {
+    const left = this.submissionColors["left"];
+    const right = this.submissionColors["right"];
+    const newBackground = `linear-gradient(to right, ${left} 30%, ${right} 70%)`;
+    this.flipMixer();
+    this.currentMixer.style.background = newBackground;
+  }
+
+  setMixerRoundEnd() {
+    const submission = this.submissionColors;
+
+    if (this.solutionColors.includes(submission["left"])) {
+      submission["right"] = this.solutionColors.find( color => {
+       return color !== submission["left"];
+      });
+    } else if (this.solutionColors.includes(submission["right"])) {
+      submission["left"] = this.solutionColors.find( color => {
+       return color !== submission["right"];
+      });
+    } else {
+      submission["left"] = this.solutionColors[0];
+      submission["right"] = this.solutionColors[1];
+    }
+
+    const left = submission["left"];
+    const right = submission["right"];
+
+    const newBackground = `linear-gradient(to right, ${left} 30%, ${right} 70%)`;
+    this.assignMixer();
+    this.flipMixer();
+    this.currentMixer.style.background = newBackground;
+  }
+
   updateMixer(swatchEle) {
+    let mixer;
     let colors = [];
 
     const newColor = swatchEle.style.backgroundColor;
     const sides = Object.keys(this.submissionColors);
 
+    this.assignMixer();
+
     if (this.submission.length === 1) {
-      this.mixer.style.backgroundColor = newColor;
-      this.submissionColors["left"] = newColor;
+      this.setInitialMixer(newColor);
     } else {
       if (this.submissionColors["right"] === null) {
         this.submissionColors["right"] = newColor;
@@ -92,33 +171,19 @@ class Game {
     }
   }
 
-  setMixerColor() {
-    const left = this.submissionColors["left"];
-    const right = this.submissionColors["right"];
-    const newBackground = `background: linear-gradient(to right, ${left} 45%, ${right} 55% 100%)`;
-    this.mixer.setAttribute("style", newBackground);
-  }
-
   updateSubmission(swatchEle) {
     const submission = Object.values(this.submission);
     if (submission.length > 2) {
       const oldSwatch = this.submission[0];
       oldSwatch.ele.classList.toggle("selected-swatch");
       this.submission = this.submission.slice(1);
-      // this.submissionColors = this.submissionColors.slice(1);
-      // this.updateMixer(swatchEle);
     }
-    // const submission = Object.values(this.submission);
-    // if (submission.length === 0) {
-    //   this.submission["first"] = swatch;
-    // }
   }
 
   addSelection(swatch, swatchEle) {
     swatchEle.addEventListener("click", (e) => {
-      if (this.submission[1] !== swatch) {
+      if (this.active && this.submission[1] !== swatch) {
         this.submission.push(swatch);
-        // this.submissionColors.push(swatch.ele.style.backgroundColor);
         this.updateSubmission(swatchEle);
         this.updateMixer(swatchEle);
         e.target.classList.toggle("selected-swatch");
@@ -128,7 +193,6 @@ class Game {
 
   resetSelection() {
     this.submission = [];
-    // this.submissionColors = [];
     this.submissionColors = {
       left: null,
       right: null,
@@ -143,23 +207,13 @@ class Game {
     });
   }
 
-  handleClick(e, restart, submit) {
-    if (e.currentTarget.innerHTML === "submit guess") {
-      this.processAnswer(restart, submit);
-    } else {
-      this.processAnswer();
-    }
-  }
-
   processAnswer() {
     if (this.guessing === true && this.submission.length === 2) {
+      this.active = false;
       this.guessing = false;
       toggleText(this.submit);
       setTimeout(() => toggleText(this.restart), 750);
-      // this.mixer.style.backgroundColor = this.target.ele.style.backgroundColor;
-      // this.updateMixer();
-      this.submissionColors = this.solutionColors;
-
+      this.setMixerRoundEnd();
       if (this.submission.length === 2) {
         this.swatches.forEach( swatch => {
           showMatch(swatch);
@@ -201,6 +255,7 @@ class Game {
   }
 
   restartGame() {
+    this.active = false;
     if (this.strikeCount === 3) {
       this.scoreCount = 0;
       this.strikeCount = 0;
@@ -208,6 +263,7 @@ class Game {
       showText(this.strikes);
       resetStrikes();
       resetScore(this.score);
+      this.resetMixer("game");
       this.restartGame();
     } else {
       if (this.guessing === false) {
@@ -220,8 +276,8 @@ class Game {
         }, 750);
         setTimeout(() => toggleText(this.submit), 750);
 
+        this.resetMixer("round");
         this.resetSelection();
-
         this.wrongIcon.classList.add("hidden-text");
         this.rightIcon.classList.add("hidden-text");
 
@@ -230,13 +286,14 @@ class Game {
         newColors = _.shuffle(newColors);
 
         for (let i=0; i < this.swatches.length; i++) {
-          this.swatches[i].setColor(newColors[i]);
-          let color = this.swatches[i].ele.style.backgroundColor;
+          let swatch = this.swatches[i];
+          swatch.setColor(newColors[i]);
+          let color = swatch.ele.style.backgroundColor;
           if (newColors[i][3]) {
-            this.swatches[i].solution = true;
+            swatch.solution = true;
             this.solutionColors.push(color);
           } else {
-            this.swatches[i].solution = false;
+            swatch.solution = false;
           }
         }
       }
@@ -257,14 +314,20 @@ class Game {
     for (let i=0; i < swatches.length; i++) {
       let newSwatch = new Swatch(swatches[i].id, i);
       newSwatch.setColor(allColors[i]);
+      let color = newSwatch.ele.style.backgroundColor;
       setBorder(newSwatch.ele);
       this.addSelection(newSwatch, newSwatch.ele);
       if (allColors[i][3]) {
         newSwatch.solution = true;
+        this.solutionColors.push(color);
       }
-      this.swatches[newSwatch.key] = newSwatch;
+      this.swatches.push(newSwatch);
     }
     return this.swatches;
+  }
+
+  createSwatches() {
+
   }
 }
 
