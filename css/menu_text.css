@@ -21,9 +21,9 @@
   position: absolute;
   margin: 0;
   transition: font-size ease-in-out 1.5s, top ease-in-out 1.5s, left ease-in-out 1.5s;
-  font-size: 50px;
+  font-size: 60px;
   top: 280px;
-  left: 105px;
+  left: 70px;
 }
 
 #title:hover {
